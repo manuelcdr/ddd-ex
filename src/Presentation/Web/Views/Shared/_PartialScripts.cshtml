@@ -1,0 +1,60 @@
+﻿
+
+
+    <!-- BEGIN JAVASCRIPT -->
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/spin.js/spin.min.js"></script>
+<script src="~/lib/autosize/jquery.autosize.min.js"></script>
+
+
+@Html.Partial("_FormScripts")
+
+<script src="~/js/core/source/App.js"></script>
+<script src="~/js/core/source/AppNavigation.js"></script>
+<script src="~/js/core/source/AppOffcanvas.js"></script>
+<script src="~/js/core/source/AppCard.js"></script>
+<script src="~/js/core/source/AppNavSearch.js"></script>
+<script src="~/js/core/source/AppVendor.js"></script>
+<script asp-append-version="true" src="~/js/core/source/AppForm.js"></script>
+
+<!-- BEGIN JAVASCRIPT -->
+@*<script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/spin.js/spin.min.js"></script>
+    <script src="~/lib/nanoscroller/jquery.nanoscroller.min.js"></script>
+    <script src="~/lib/toastr/toastr.js"></script>*@
+
+<script asp-append-version="true" src="~/js/custom-materialize.js"></script>
+<script asp-append-version="true" src="~/js/site.js"></script>
+
+@*<script src="~/js/core/source/App.js"></script>
+    <script src="~/js/core/source/AppCard.js"></script>
+    <script src="~/js/core/source/AppForm.js"></script>
+    <script src="~/js/core/source/AppNavigation.js"></script>
+    <script src="~/js/core/source/AppNavSearch.js"></script>
+    <script src="~/js/core/source/AppOffcanvas.js"></script>
+    <script src="~/js/core/source/AppVendor.js"></script>
+    <script src="~/js/core/source/AppFormListaPesquisavel.js"></script>*@
+
+<script>
+    $(document).ready(function () {
+        alert('teste');
+        Dropzone.options.uploader = {
+            paramName: "file",
+            maxFilesize: 10,
+            accept: function (file, done) {
+                alert('teste2');
+                if (file.name == "test.jpg") {
+                    alert("Can't upload a test file.");
+                }
+                else {
+                    //Show a confirm alert and display the image on the page.
+                    alert('teste2');
+                }
+            }
+        };
+    });
+</script>

@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNet.Identity
+@using PGLaw.Apresentacao.Web.Extensions
+@model PgLaw.Apresentacao.Web.App.Models.Processo.ProcessoAndamentoVM
+
+<script src="~/assets/js/libs/jquery-validation/dist/additional-methods.js"></script>
+
+<!-- BEGIN FORM MODAL MARKUP -->
+<div class="modal fade" id="modalAlterarImagemProfile" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formModalLabel">Alterar Imagem</h4>
+            </div>
+            <div class="modal-body">
+                <div class="card-body no-bottom-margin no-bottom-padding">
+                    @*<div class="contain-sm">*@
+                    <div class="card card-outlined border-dashed style-info no-margin">
+                        <div class="card-body no-padding">
+                            @using (Ajax.BeginForm("AlterarImagemProfile", null, new AjaxOptions { HttpMethod = "Post" }, new { @class = "dropzone no-margin", id = "my-awesome-dropzone" }))
+                            {
+                                <div class="dz-message">
+                                    <h3 class="text-default-light">Clique aqui ou arraste a imagem aqui.</h3>
+                                </div>
+                                <div class="fallback">
+                                    <input name="file" type="file" multiple />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-modal" type="button" class="btn btn-default cancel-modal" data-dismiss="modal">Cancel</button>
+                <button id="btn-enviar-arquivos" type="button" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div><!-- /.modal-content -->
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+<!-- END FORM MODAL MARKUP -->
+
+<script>
+
+    @*function reloadImages() {
+        d = (new Date()).getTime();
+        sessionStorage.setItem("imgProfileVersion", d);
+        $(".crop-img-squad").attr("src", "@(Url.ObterImagemPessoa(Convert.ToInt32(User.ObterIdPessoa())))" + "?" + d);
+    }*@
+
+    $(function () {
+        Dropzone.options.myAwesomeDropzone = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 1, // MB
+            uploadMultiple: false,
+            createImageThumbnails: true,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            acceptedFiles: "image/*",
+            parallelUploads: 1,
+            init: function () {
+                var submitButton = document.querySelector("#btn-enviar-arquivos")
+                myDropzone = this; // closure
+
+                submitButton.addEventListener("click", function () {
+                    myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+                });
+
+                // You might want to show the submit button only when
+                // files are dropped here:
+                this.on("addedfile", function () {
+                    $("#btn-adicionar-arquivos").removeClass('disabled');
+                });
+            },
+            success: function () {
+                reloadImages();
+                $('#modalAlterarImagemProfile').find('.cancel-modal').eq(0).click();
+            }
+        };
+    });
+</script>

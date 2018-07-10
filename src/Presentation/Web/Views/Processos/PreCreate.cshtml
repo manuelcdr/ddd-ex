@@ -1,0 +1,171 @@
+﻿@model PGLaw.Application.Juridico.Models.Processos.PreCadastroProcessoVM
+
+@section styles{
+}
+
+<div class="card">
+    <div class="card-head style-primary">
+        <header>Processo</header>
+    </div><!--end .card-head -->
+    <div class="card-body ">
+        <form asp-action="PosCreate" method="post" class="form-horizontal" id="formProcesso">
+
+            <div class="form-group">
+                <label asp-for="ClienteId" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10 col-md-5 col-lg-4">
+                    <select asp-for="ClienteId" asp-items="ViewBag.Cliente" class="form-control">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="ClienteId"></span>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="NumeroInstancia" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10 col-md-5 col-lg-4">
+                    <label class="radio-inline radio-styled">
+                        <input asp-for="NumeroInstancia" type="radio" value="1">1º Instância
+                    </label>
+                    <label class="radio-inline radio-styled">
+                        <input asp-for="NumeroInstancia" type="radio" value="2">2º Instância
+                    </label>
+                    <label class="radio-inline radio-styled">
+                        <input asp-for="NumeroInstancia" type="radio" value="3">3º Instância
+                    </label>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="NumeroNInstancia" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10 col-md-5 col-lg-4">
+                    <input type="text" asp-for="NumeroNInstancia" class="form-control text-center" />
+                    <span asp-validation-for="NumeroNInstancia"></span>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="TipoProcesso" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10 col-md-5 col-lg-4">
+                    <label class="radio-inline radio-styled">
+                        <input asp-for="TipoProcesso" type="radio" value="Judicial">Judicial
+                    </label>
+                    <label class="radio-inline radio-styled">
+                        <input asp-for="TipoProcesso" type="radio" value="Administrativo">Administrativo
+                    </label>
+                    <label class="radio-inline radio-styled">
+                        <input asp-for="TipoProcesso" type="radio" value="ExtraJudicial">Extrajudicial
+                    </label>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="NumeroProcesso" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10 col-md-5 col-lg-4">
+                    <input type="text" asp-for="NumeroProcesso" class="form-control text-center" data-inputmask="'mask': '9999999-99.9999.9.99.9999'" />
+                    <span asp-validation-for="NumeroProcesso"></span>
+                </div>
+            </div>
+
+            <div class="fixed-action-btn">
+                <button type="submit" class="btn ink-reaction btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-righ"><i class="md md-done-all"></i></button>
+            </div>
+        </form>
+    </div><!--end .card-body -->
+</div><!--end .card -->
+<!-- END VALIDATION FORM WIZARD -->
+
+
+<div class="hidden mensagem-numero-processo-template">
+    <p style='text-align:justify'>
+        <b>O Número do processo não está no padrão CNJ!</b>
+    </p>
+    <p style='text-align:justify;font-size:smaller;'>
+        Numeração Única de Processos estabelecida na Res. 65 do Conselho Nacional de Justiça, que determina a adoção do seguinte formato para números de processos:
+    </p>
+    <p style='text-align:justify;font-size:smaller;'>
+        <b>NNNNNNN-DD.AAAA.J.TR.OOOO</b>
+    </p>
+    <p style='text-align:justify;font-size:smaller;'>
+        <b>NNNNNNN</b> => Corresponde ao número sequencial do processo, com 7 dígitos, no ano do ajuizamento<br />
+        <b>DD</b> => Corresponde aos dígitos de verificação<br />
+        <b>AAAA</b> => Corresponde ao ano de ajuizamento da ação/processo<br />
+        <b>J.TR</b> => Corresponde aos números que identificam o Ramo e a Região da Justiça<br />
+        <b>OOOO</b> => Corresponde ao número que identifica o juízo a que distribuída a ação<br />
+    </p>
+</div>
+
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+
+        function eventClickTipoProcesso() {
+            $('.card-head header').text('Processo ' + $(this).val());
+
+            if ($(this).val().trim() == "Judicial") {
+                $('#NumeroProcesso').inputmask('9999999-99.9999.9.99.9999');
+            }
+            else {
+                $('#NumeroProcesso').inputmask('remove');
+            }
+        }
+
+        function eventChangeNumeroProcesso() {
+            if ($('input[name=TipoProcesso]:checked') != undefined) {
+                if ($('input[name=TipoProcesso]:checked').val().toUpperCase() == 'JUDICIAL') {
+                    if ($("#NumeroProcesso").val().trim() != "") {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("ValidaCNJ")',
+                            data: { NumeroProcesso: $("#NumeroProcesso").val() },
+                            success: function (msg) {
+                                if (msg == "false") {
+                                    var sTexto;
+
+                                    sTexto = $('.mensagem-numero-processo-template').clone();
+                                    sTexto.removeClass('hidden');
+
+                                    $("#NumeroProcesso").parent().addClass('has-error');
+
+                                    toastr.error(sTexto, '', { progressBar: false, timeOut: 0, closeButton : true });
+
+                                    return false;
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                console.log(xhr.status);
+                                var sErro = $.parseJSON(xhr.responseText);
+                                console.log(sErro.Message);
+                                console.log(sErro.StackTrace);
+                                console.log(sErro.ExceptionType);
+                                console.log(ajaxOptions);
+                                console.log(thrownError);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+
+        $(function () {
+
+            $("input[name=TipoProcesso]").click(eventClickTipoProcesso);
+
+            $("#NumeroProcesso").change(eventChangeNumeroProcesso);
+
+        });
+
+    </script>
+}
+

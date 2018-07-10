@@ -1,0 +1,21 @@
+﻿@model PGLaw.Application.Sistema.Models.MenuVM
+
+@if (Model.MenusFilhos.Any())
+{
+    <li class="gui-folder">
+        <a href="javascript:void(0);">
+            <span class="title">@Model.Titulo</span>
+        </a>
+        <ul>
+            @foreach (var item in Model.MenusFilhos.ToArray())
+            {
+                @Html.Partial("_MenuFilho2", item)
+            }
+        </ul>
+    </li>
+}
+else
+{
+    <li><a href="@Model.Url"><span class="title">@Model.Titulo</span></a></li>
+}
+

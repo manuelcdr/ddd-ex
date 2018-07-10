@@ -1,0 +1,12 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Erro";
+    Layout = "~/Views/Shared/_LayoutErro.cshtml";
+}
+
+<div class="contain-xs text-center">
+    <h1 class="text-danger">Ops!</h1>
+    <h2 class="text-danger">Ocorreu um erro ao processar sua solicitação.</h2>
+    <h2 class="text-danger hidden">@TempData["ErrorMessage"]</h2>
+</div>

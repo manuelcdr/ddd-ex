@@ -1,0 +1,46 @@
+﻿
+.search-input {
+    width: 100%;
+}
+
+.badge-list-item {
+    margin-left: 5px;
+}
+
+.no-top-margin {
+    margin-top: 0;
+}
+
+.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+.no-top-padding {
+    padding-top: 0;
+}
+
+.no-bottom-padding {
+    padding-bottom: 0;
+}
+
+.crop-img-squad {
+    object-fit: cover;
+}
+
+.form-wizard .pager {
+    margin-bottom: 0;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.underlined {
+    border-bottom: 1px solid rgba(150, 156, 156, 0.4) !important;
+}
+
+/* select2 */
+
+.select2-dropdown-open .select2-choice {
+    background: none;
+}

@@ -1,0 +1,49 @@
+﻿@model PGLaw.Application.Sistema.Models.MenuVM
+
+@if (Model.Raiz)
+{
+    <li class="gui-folder">
+        <a @(Model.Ferramenta ? $"href={Model.Url}" : "")>
+            <div class="gui-icon"><i class="@ViewBag.IconClassMenu"></i></div>
+            <span class="title">@Model.Titulo</span>
+        </a>
+        <!--start submenu -->
+        @if (Model.MenusFilhos.Any())
+        {
+            <ul>
+                @foreach (var filho in Model.MenusFilhos.ToArray())
+                {
+                    <vc:menu menu="filho"></vc:menu>
+                }
+            </ul>
+        }
+    </li>
+}
+else
+{
+    @if (Model.MenusFilhos.Any())
+    {
+        <li class="gui-folder">
+            <a href="javascript:void(0);">
+                <span class="title">@Model.Titulo</span>
+            </a>
+            <ul>
+                @foreach (var filho in Model.MenusFilhos.ToArray())
+                {
+                    <vc:menu menu="filho"></vc:menu>
+                }
+            </ul>
+        </li>
+    }
+    else
+    {
+        <li>
+            <a href="@Model.Url">
+                <span class="title">@Model.Titulo</span>
+            </a>
+        </li>
+    }
+}
+
+
+

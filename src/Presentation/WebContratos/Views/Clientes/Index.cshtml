@@ -1,0 +1,94 @@
+﻿@model IEnumerable<PGLaw.Application.Contratos.Models.Pessoas.ClienteVM>
+
+
+
+<div id="card-lista-pessoas" class="card container-lista-pesquisavel">
+    <div class="card-body style-primary form-inverse">
+        <form id="form-pesquisa" class="form-horizontal no-y-padding focus" role="form">
+            <div class="row">
+                <div id="form-group-pesquisa" class="form-group floating-label no-margin">
+                    <div class="input-group">
+                        <div class="input-group-content">
+                            <input type="text" id="Pesquisa" name="Pesquisa" class="form-control pesquisa" />
+                        </div>
+                        <div class="input-group-btn">
+                            <button id="btn-buscar" class="btn btn-floating-action btn-primary-dark" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="partial-container" class="card-body no-padding">
+        <div class="small-padding style-primary-dark">
+            <p class="text-light text-right no-margin">A busca retornou <strong class="contador-busca">@(Model?.Count() ?? 0)</strong> resultados</p>
+        </div>
+        <ul class="list divider-full-bleed lista">
+            @if (Model?.Any() ?? false)
+            {
+                var contador = 1;
+
+                foreach (var item in Model)
+                {
+                    <li id="tile-@contador" class="tile item">
+                        <a class="tile-content ink-reaction">
+                            <div class="tile-icon">
+                                <span>
+                                    @if (item.TipoPessoa == PGLaw.Infra.Cross.Common.Enums.TipoPessoa.Fisica)
+                                    {
+                                        <i class=" text-info md md-person"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="text-accent md md-business"></i>
+
+                                    }
+                                </span>
+                            </div>
+
+                            <div class="tile-text nome detalhe">
+                                @item.Nome
+                            </div>
+                        </a>
+                        <a class="btn btn-flat ink-reaction btn-default" asp-action="Edit" asp-route-id="@item.Id" asp-route-tipo="@item.TipoPessoa" title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </li>
+
+                    contador++;
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+@*<div class="fixed-action-btn">
+        <a asp-action="Create" asp-route-tipo="Juridica" class="btn ink-reaction btn-floating-action btn-lg btn-primary stick-bottom-right"><i class="md md-add"></i></a>
+    </div>*@
+<div class="fixed-action-btn">
+    @*<a class="btn-floating btn-large red">
+            <i class="md md-add"></i>
+        </a>*@
+    <a class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-righ" data-toggle="tooltip" data-placement="left" title="" data-original-title="Novo Cliente"><i class="md md-add"></i></a>
+    <ul>
+        <li><a asp-action="Create" asp-route-tipo="Fisica" class="btn-floating-action btn-floating btn-primary-light" data-toggle="tooltip" data-placement="left" title="" data-original-title="Pessoa Física"><i class="md md-person"></i></a></li>
+        <li><a asp-action="Create" asp-route-tipo="Juridica" class="btn-floating-action btn-floating btn-primary" data-toggle="tooltip" data-placement="left" title="" data-original-title="Pessoa Jurídica"><i class="md md-business"></i></a></li>
+    </ul>
+</div>
+
+
+
+@section scripts {
+    <script src="~/js/core/source/AppFormListaPesquisavel.js"></script>
+    <script src="~/js/custom-materialize.js"></script>
+
+    <script>
+
+        // Or with jQuery
+        $(document).ready(function () {
+            $('.fixed-action-btn').floatingActionButton();
+        });
+
+
+    </script>
+}

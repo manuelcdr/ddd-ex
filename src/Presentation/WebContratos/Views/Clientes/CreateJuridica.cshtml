@@ -1,0 +1,245 @@
+﻿@model PGLaw.Application.Contratos.Models.Pessoas.ClientePessoaJuridicaVM
+
+@using PGLaw.Infra.Cross.Common.Enums;
+
+@section styles{
+
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/wizard/wizard.css" />
+
+}
+
+<!-- BEGIN VALIDATION FORM WIZARD -->
+<div class="card">
+    <div class="card-head style-primary">
+
+    </div><!--end .card-head -->
+    <div class="card-body ">
+        <div id="rootwizard" class="form-wizard form-wizard-horizontal">
+            <form asp-action="CreatePessoaJuridica" class="form floating-label form-validation" role="form" novalidate="novalidate">
+                <div class="form-wizard-nav">
+                    <div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
+                    <ul class="nav nav-justified">
+                        <li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">DADOS BÁSICOS</span></a></li>
+                        <li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">CONTATO</span></a></li>
+                        <li><a href="#step3" data-toggle="tab"><span class="step">3</span> <span class="title">ENDEREÇO</span></a></li>
+                        <li><a href="#step4" data-toggle="tab"><span class="step">4</span> <span class="title">SEGMENTO</span></a></li>
+                    </ul>
+                </div><!--end .form-wizard-nav -->
+                <div class="tab-content clearfix">
+                    <div class="tab-pane active" id="step1">
+                        <br /><br />
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.DadosPessoaJuridica.RazaoSocial" class="form-control">
+
+                                <label asp-for="Pessoa.DadosPessoaJuridica.RazaoSocial"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.Nome" class="form-control">
+                                <label>Nome Fantasia</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.DadosPessoaJuridica.CNPJ" class="form-control" data-inputmask="'mask': '99.999.999/9999-99'" data-rule-cnpjBR="true">
+                                <label asp-for="Pessoa.DadosPessoaJuridica.CNPJ"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.DadosPessoaJuridica.InscricaoEstadual" class="form-control">
+                                <label asp-for="Pessoa.DadosPessoaJuridica.InscricaoEstadual"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.DadosPessoaJuridica.inscricaoMunicipal" class="form-control">
+                                <label asp-for="Pessoa.DadosPessoaJuridica.inscricaoMunicipal"></label>
+                            </div>
+                        </div>
+                    </div><!--end #step1 -->
+                    <div class="tab-pane" id="step2">
+                        <br /><br />
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.Telefone" class="form-control" data-inputmask="'mask': '(99) 9999-9999'">
+                                <label asp-for="Pessoa.Telefone"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.Url" class="form-control">
+                                <label asp-for="Pessoa.Url"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.Email" class="form-control">
+                                <label asp-for="Pessoa.Email"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Pessoa.DadosPessoaJuridica.EmailFinanceiro" class="form-control">
+                                <label asp-for="Pessoa.DadosPessoaJuridica.EmailFinanceiro"></label>
+                            </div>
+                        </div>
+
+                    </div><!--end #step2 -->
+                    <div class="tab-pane" id="step3">
+                        <br /><br />
+                        <div class="col-lg-3 col-sm-12">
+                            <div class="form-group">
+                                <select id="TipoEndereco" name="TipoEndereco" class="form-control">
+                                    <option value="">&nbsp;</option>
+                                    <option value="1">Cobrança</option>
+                                    <option value="2">Comercial</option>
+                                    <option value="3">Entrega</option>
+                                </select>
+                                <label for="TipoEndereco">Tipo Endereço</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" name="Endereco" id="Endereco" class="form-control" data-rule-minlength="5">
+                                <label for="Endereco" class="control-label">Endereço</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" name="Numero" id="Numero" class="form-control" data-rule-minlength="5">
+                                <label for="Numero" class="control-label">Número</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" name="Complemento" id="Complemento" class="form-control" data-rule-minlength="5">
+                                <label for="Complemento" class="control-label">Complemento</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" name="Bairro" id="Bairro" class="form-control" data-rule-minlength="5">
+                                <label for="Bairro" class="control-label">Bairro</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" name="Cep" id="Cep" class="form-control" data-rule-postalcodeBR="true">
+                                <label for="Cep" class="control-label">CEP</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="UF" class="form-control">
+                                    <option value="SP">São Paulo</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="MG">Minas gerais</option>
+                                </select>
+                                <label for="Estado">Estado</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-12">
+                            <div class="form-group">
+                                <select id="Cidade" name="Cidade" class="form-control">
+                                    <option value="">&nbsp;</option>
+                                </select>
+                                <label for="Cidade">Cidade</label>
+                            </div>
+                        </div>
+                    </div><!--end #step3 -->
+                    <div class="tab-pane" id="step4">
+                        <br /><br />
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select asp-for="Segmento" class="form-control">
+                                        <option value="Consumidor">Consumidor</option>
+                                        <option value="Clientes">Clientes</option>
+                                        <option value="Direito Público (Adm)">Direito Público (Adm)</option>
+                                        <option value="Trabalhista" selected>Trabalhista</option>
+                                    </select>
+                                    <label asp-for="Segmento"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select asp-for="Atuacao" class="form-control">
+                                        <option value="Produtos">Produtos</option>
+                                        <option value="Serviços">Serviços</option>
+                                    </select>
+                                    <label asp-for="Atuacao"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end #step4 -->
+                </div><!--end .tab-content -->
+                <ul class="pager wizard">
+                    <li class="previous"><button type="button" class="btn btn-floating-action btn-default"> <i class="md md-navigate-before"></i> </button></li>
+                    <li class="finish hidden"><button type="submit" class="btn btn-floating-action btn-primary"><i class="md md-done-all"></i></button></li>
+                    <li class="next"><button type="button" class="btn btn-floating-action btn-default"><i class="md md-navigate-next"></i></button></li>
+                </ul>
+            </form>
+        </div><!--end #rootwizard -->
+    </div><!--end .card-body -->
+</div><!--end .card -->
+<!-- END VALIDATION FORM WIZARD -->
+
+<div class="fixed-action-left-btn">
+    <a class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-left" title="Voltar" href="/Clientes"><i class="glyphicon glyphicon-arrow-left"></i></a>
+</div>
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/lib/wizard/jquery.bootstrap.wizard.min.js"></script>
+
+    <script>
+        $(function () {
+
+            $(":input").inputmask();
+
+            $('#rootwizard').bootstrapWizard({
+                onTabShow: function (tab, navigation, index) {
+                    var total = navigation.find('li').length;
+                    var current = index + 0;
+                    var percent = (current / (total - 1)) * 100;
+                    var percentWidth = 100 - (100 / total) + '%';
+
+                    navigation.find('li').removeClass('done');
+                    navigation.find('li.active').prevAll().addClass('done');
+
+                    $('#rootwizard').find('.progress-bar').css({ width: percent + '%' });
+                    $('.form-wizard-horizontal').find('.progress').css({ 'width': percentWidth });
+
+                    if (percent == 100) {
+                        $('#rootwizard').find('.next').addClass("hidden");
+                        $('#rootwizard').find('.finish').removeClass("hidden");
+                    }
+                    else {
+                        $('#rootwizard').find('.next').removeClass("hidden");
+                        $('#rootwizard').find('.finish').addClass("hidden");
+                    }
+
+                },
+                onNext: function (tab, navigation, index) {
+                    var form = $('#rootwizard').find('.form-validation');
+                    var valid = form.valid();
+                    if (!valid) {
+                        form.data('validator').focusInvalid();
+                        return false;
+                    }
+                }
+
+            });
+
+            window.prettyPrint && prettyPrint()
+        });
+
+
+
+    </script>
+}

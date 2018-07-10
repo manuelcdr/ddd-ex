@@ -1,0 +1,115 @@
+﻿@model PGLaw.Application.Sistema.Models.RegistrarVM
+
+@using PGLaw.Infra.Cross.Common.Enums
+
+@section styles{
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/wizard/wizard.css" />
+}
+
+<!-- BEGIN VALIDATION FORM WIZARD -->
+
+
+<div class="card">
+    <div class="card-head card-head-sm style-primary">
+        <header>Novo Usuário</header>
+    </div><!--end .card-head -->
+    <div class="card-body ">
+        <div id="rootwizard" class="form-wizard form-wizard-horizontal">
+            <form asp-action="Create" class="form floating-label form-validation">
+                <div class="form-wizard-nav">
+                    <div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
+                    <ul class="nav nav-justified">
+                        <li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">DADOS PESSOAIS</span></a></li>
+                        <li id="ultimo-tab"><a href="#step4" data-toggle="tab"><span class="step">4</span> <span class="title">DADOS DE ACESSO</span></a></li>
+                    </ul>
+                </div><!--end .form-wizard-nav -->
+                <div class="tab-content clearfix">
+
+                    <div class="tab-pane active" id="step1">
+                        <br /><br />
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Nome" class="form-control" required>
+                                <span asp-validation-for="Nome"></span>
+                                <label asp-for="Nome"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Email" class="form-control">
+                                <label asp-for="Email"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'" data-rule-cpf="true">
+                                <span asp-validation-for="CPF"></span>
+                                <label asp-for="CPF"></label>
+                            </div>
+                        </div>
+                    </div><!--end #step1 -->
+
+                    <div class="tab-pane" id="step4">
+                        <br /><br />
+                        <div class="form-inline">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12">
+
+
+                                    <div class="form-group">
+                                        <input type="text" asp-for="Senha" class="form-control" />
+                                        <label>Senha</label>
+                                    </div>
+
+                                    <label class="checkbox checkbox-styled">
+                                        <input type="checkbox" asp-for="TrocarSenha" />
+                                        Trocar senha no próximo acesso
+                                    </label>
+                                </div>
+
+                            </div>
+                            <br /><br />
+                            <label> Permissão de acesso dias da semana</label>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12">
+
+                                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Domingo" /> Domingo</label>
+                                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Segunda" /> Segunda</label>
+                                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Terca" /> Terça</label>
+                                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Quarta" /> Quarta</label>
+                                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Quinta" /> Quinta</label>
+                                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Sexta" /> Sexta</label>
+                                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Sabado" /> Sábado</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="form-group">
+                            <label>Niveis de acesso</label>
+                            <select asp-for="NiveisSelecionados" asp-items="ViewBag.NiveisDeAcesso" multiple="multiple" class="mult-select" name="NiveisSelecionados"></select>
+                        </div>
+                        <br />
+                    </div><!--end #step4 -->
+                </div><!--end .tab-content -->
+                <ul class="pager wizard">
+                    <li class="previous"><button type="button" class="btn btn-floating-action btn-default"> <i class="md md-navigate-before"></i> </button></li>
+                    <li class="finish hidden"><button type="submit" class="btn btn-floating-action btn-primary"><i class="md md-done-all"></i></button></li>
+                    <li class="next"><button type="button" class="btn btn-floating-action btn-default"><i class="md md-navigate-next"></i></button></li>
+                </ul>
+            </form>
+        </div><!--end #rootwizard -->
+    </div><!--end .card-body -->
+</div><!--end .card -->
+<!-- END VALIDATION FORM WIZARD -->
+
+<div class="fixed-action-left-btn">
+    <a class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-left" title="Voltar" href="/Clientes"><i class="glyphicon glyphicon-arrow-left"></i></a>
+</div>
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/lib/wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/core/source/AppWisard.js"></script>
+}

@@ -1,0 +1,121 @@
+﻿@model PGLaw.Application.Juridico.Models.ProcessoVM
+
+@{
+    ViewBag.Title = "Detalhes";
+    //ViewBag.ProcessoId = Model.Id;
+}
+
+@section styles{
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/materialadmin_print.css" media="print" />
+
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/dropzone/dropzone-theme.css" />
+
+
+    <style>
+        .detalhes-processo-pedido + .detalhes-processo-pedido::before {
+            content: "|";
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .card-header {
+            width: calc(100% - 112px);
+            margin-left: 56px;
+        }
+
+        .row-100 {
+            margin-left: -37px;
+            margin-right: -37px;
+        }
+    </style>
+}
+
+
+@*@Html.Partial("_ModalAndamento", new PGLaw.Application.Juridico.Models.Processos.ProcessoAndamentoVM { ProcessoId = Model.Id, DataAndamento = DateTime.Now })
+
+    @Html.Partial("_ModalPrazo", new PgLaw.Apresentacao.Web.App.Models.Processo.PrazoVM { ProcessoId = Model.Id, DataPrazo = DateTime.Now })
+
+    @Html.Partial("_ModalProvidencia", new PgLaw.Apresentacao.Web.App.Models.Processo.ProvidenciaVM { ProcessoId = Model.Id, DataPrazo = DateTime.Now })*@
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-printable style-default-light">
+            <div class="card-head not-printable">
+                <div class="tools">
+                    <div class="btn-group">
+                        <a class="btn btn-floating-action btn-primary" href="javascript:void(0);" onclick="javascript:window.print();"><i class="md md-print"></i></a>
+                    </div>
+                </div>
+            </div><!--end .card-head -->
+            <div class="card-body style-default-bright" style="padding-bottom: 0;">
+
+                @Html.Partial("_CabecalhoProcesso", Model)
+
+                <div class="row">
+                    <div class="card no-margin card-collapsable no-card-shadow no-shadow card-printable">
+                        <div class="card-head card-head-xs">
+                            <div class="card-header text-center">
+                                <header class="text-light text-center">Dados Gerais do Processo</header>
+                                <div class="btn-group">
+                                    <a class="btn btn-collapse"><i class="md md-expand-more"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body no-margin no-padding not-printable">
+                            @Html.Partial("_InformacoesProcesso", Model)
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                @*<div class="row">
+                    @Html.Partial("_Arquivos", Model.Arquivos)
+                </div>
+
+                <hr />*@
+
+                <div class="row">
+                    @Html.Partial("_TimeLineProcesso", Model)
+                </div>
+
+                <div style=" margin-left: -24px; margin-right: -24px; ">
+                    <div class="row">
+                        @Html.Partial("_PedidosProcesso", Model)
+                    </div><!--end .row -->
+                </div><!--end .card-body -->
+            </div><!--end .card -->
+        </div><!--end .col -->
+    </div><!--end .row -->
+</div>
+
+
+
+@section scripts{
+    <script src="~/lib/dropzone/dropzone.js"></script>
+    <script src="~/js/core/source/AppFormListaPesquisavel.js"></script>
+
+    <script>
+
+        function guardarTexto($select, $input) {
+            console.log('guardar');
+            var descricao = $select.find('option:selected').eq(0).text();
+            console.log(descricao);
+            $input.val(descricao);;
+            console.log($input.val());
+        }
+
+        $(function () {
+
+            materialadmin.AppCard.toggleCardCollapse($('.card-collapsable'), 0);
+
+            $('.btn-collapse').click(function () {
+                materialadmin.AppCard.toggleCardCollapse($(this).parents('.card-collapsable').eq(0), 500);
+            })
+        });
+
+
+    </script>
+
+}

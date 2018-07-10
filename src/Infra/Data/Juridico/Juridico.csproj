@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>PGLaw.Infra.Data.Juridico</RootNamespace>
+    <AssemblyName>PGLaw.Infra.Data.Juridico</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="EntityConfigs\EntityConfigBase.cs" />
+    <Compile Remove="EntityConfigs\EquipeConfig.cs" />
+    <Compile Remove="EntityConfigs\PessoaFisicaConfig.cs" />
+    <Compile Remove="EntityConfigs\PessoaJuridicaConfig.cs" />
+    <Compile Remove="EntityConfigs\Relashionships\ClienteAreaOfensoraConfig.cs" />
+    <Compile Remove="EntityConfigs\Relashionships\ClienteCausaRealConfig.cs" />
+    <Compile Remove="EntityConfigs\Relashionships\ClienteMotivoAcionamentoConfig.cs" />
+    <Compile Remove="EntityConfigs\Relashionships\EquipeClienteConfig.cs" />
+    <Compile Remove="EntityConfigs\Relashionships\EquipePessoaConfig.cs" />
+    <Compile Remove="EntityConfigs\Relashionships\PessoaClienteConfig.cs" />
+    <Compile Remove="EntityConfigs\Relashionships\ProcessoPessoaConfig.cs" />
+    <Compile Remove="Migrations\20180322212832_Initial.cs" />
+    <Compile Remove="Migrations\20180322212832_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20180322223500_Initial.cs" />
+    <Compile Remove="Migrations\20180323170103_Initial.cs" />
+    <Compile Remove="Migrations\20180323180139_Initial.cs" />
+    <Compile Remove="Migrations\20180323182816_Initial.cs" />
+    <Compile Remove="Migrations\20180327204510_PessoaUpdate7.cs" />
+    <Compile Remove="Migrations\20180327204615_PessoaUpdate8.cs" />
+    <Compile Remove="Migrations\20180327205043_PessoaUpdate8.cs" />
+    <Compile Remove="Migrations\20180327205506_PessoaUpdate8.cs" />
+    <Compile Remove="Migrations\20180329143457_AdicionaValidacoes.cs" />
+    <Compile Remove="Migrations\20180417154651_atualizaProcesso.cs" />
+    <Compile Remove="Migrations\20180417154651_atualizaProcesso.Designer.cs" />
+    <Compile Remove="Migrations\20180417210831_atualizaProcessoId.cs" />
+    <Compile Remove="Migrations\20180417211008_atualizaProcessoIdTodos.cs" />
+    <Compile Remove="Migrations\20180417211123_atualizaProcessoIdTodos2.cs" />
+    <Compile Remove="Migrations\20180503212204_pessoaCliente.cs" />
+    <Compile Remove="Migrations\20180504144245_createTablePedido.cs" />
+    <Compile Remove="Migrations\20180504145127_createTablePedido.cs" />
+    <Compile Remove="Migrations\20180504145430_createTablePedido.cs" />
+    <Compile Remove="Migrations\20180504150702_createTablePedido.cs" />
+    <Compile Remove="Migrations\20180504151253_createTablePedido2.cs" />
+    <Compile Remove="Migrations\20180504153657_verificandoAtualizacoes.cs" />
+    <Compile Remove="Migrations\20180509225220_CausaRealId.cs" />
+    <Compile Remove="Migrations\20180509230207_CausaRealId.cs" />
+    <Compile Remove="Migrations\20180620164331_teste20.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Juridico.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain\Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\Domain\Juridico\Juridico.csproj" />
+    <ProjectReference Include="..\Base\Base.csproj" />
+  </ItemGroup>
+
+</Project>

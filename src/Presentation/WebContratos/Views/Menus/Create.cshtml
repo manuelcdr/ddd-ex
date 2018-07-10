@@ -1,0 +1,57 @@
+﻿@using PGLaw.Application.Sistema.Models;
+@model MenuVM
+
+@{
+    var tipo = ViewBag.Tipo;
+    ViewBag.Title = Model?.Titulo ?? "Novo Menu";
+    ViewBag.SubTitle = "Menu de Acesso";
+}
+
+<div class="row">
+    <div class="col-sm-3">
+        @if (Model.MenuPaiId.HasValue)
+        {
+            <div class="card">
+                <div class="card-head card-head-sm style-primary-light">
+                    <header>Menu Pai</header>
+                </div>
+                <div class="card-body no-padding">
+                    <ul class="list divider-full-bleed">
+                        <li class="tile">
+                            <a asp-action="Edit" asp-route-id="@Model.MenuPaiId.Value" class="tile-content ink-reaction">
+                                <div class="tile-text">
+                                    @Model.MenuPaiTitulo
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-6">
+        <form asp-action="Create" method="post" class="form">
+            <div class="card card-underline">
+                <div class="card-head card-head-sm style-primary">
+                    <header>@ViewBag.Title</header>
+                </div>
+                <div class="card-body">
+                    @Html.Partial("_Menu", Model)
+                </div>
+                <div class="card-actionbar">
+                    <div class="card-actionbar-row">
+                        <button type="reset" class="btn btn-flat">Cancel</button>
+                        <button type="submit" class="btn btn-flat btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-3">
+    </div>
+
+</div>
+
+@section scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

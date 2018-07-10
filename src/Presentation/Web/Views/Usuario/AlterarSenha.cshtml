@@ -1,0 +1,61 @@
+﻿@model PGLaw.Application.Sistema.Models.AlterarSenhaVM
+@{
+    ViewBag.Title = "Alterar Senha de Acesso";
+}
+
+<form action="AlterarSenha" method="post" class="form" role="form">
+    <div class="card">
+        <div class="card-head style-primary">
+            <header>@ViewBag.Title <small>@ViewBag.SubTitle</small></header>
+        </div>
+        <div class="card-body">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="All" class="alert alert-danger">
+                <p><strong>Ops! Ocorreram alguns erros.</strong> Revise os campos e clique novamente.</p>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="SenhaAtual" class="form-control" />
+                <label asp-for="SenhaAtual"></label>
+                <span asp-validation-for="SenhaAtual"></span>
+                <p app-help-for="SenhaAtual"></p>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="NovaSenha" class="form-control" />
+                <label asp-for="NovaSenha"></label>
+                <span asp-validation-for="NovaSenha"></span>
+                <span app-help-for="NovaSenha"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="ConfirmacaoNovaSenha" class="form-control" />
+                <span asp-validation-for="ConfirmacaoNovaSenha"></span>
+                <label asp-for="ConfirmacaoNovaSenha"></label>
+                <span app-help-for="ConfirmacaoNovaSenha"></span>
+            </div>
+        </div>
+        <div class="card-actionbar">
+            <div class="card-actionbar-row">
+                <button type="reset" class="btn btn-flat">Cancel</button>
+                <button type="submit" class="btn btn-flat btn-primary">Alterar Senha</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    @if (!string.IsNullOrEmpty(ViewBag.Mensagem as string))
+    {
+        <script>
+            $(function () {
+                toastr.warning("@(ViewBag.Mensagem)");
+            });  
+        </script>
+
+    }
+
+}

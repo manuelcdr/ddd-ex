@@ -1,0 +1,30 @@
+﻿@model PGLaw.Application.Juridico.Models.Processos.OrgaoVM
+
+@{
+    ViewBag.Title = Model.Descricao;
+    ViewBag.SubTitle = Model.DescricaoReduzida;
+}
+
+<form asp-action="Edit" method="post" class="form" role="form">
+    <div class="card card-underline">
+        <div class="card-head card-head-sm style-primary">
+            <header>@ViewBag.Title</header>
+            @*<div class="tools">
+                    <a asp-action="Remover" asp-route-id="@Model?.Id" class="btn btn-icon-toggle btn-close"><i class="md md-delete"></i></a>
+                </div>*@
+        </div>
+        <div class="card-body">
+            @Html.Partial("_Model", Model)
+        </div>
+        <div class="card-actionbar">
+            <div class="card-actionbar-row">
+                <button type="reset" class="btn btn-flat">Cancel</button>
+                <button type="submit" class="btn btn-flat btn-primary">Atualizar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,107 @@
+﻿@model PGLaw.Application.Sistema.Models.LoginVM
+
+@{
+    Layout = null;
+    ViewBag.Title = "Iniciar PG Law";
+    ViewBag.SubTitle = "v 2.0";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+
+    <!-- BEGIN META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="your,keywords">
+    <meta name="description" content="Short explanation about this website">
+
+    <!-- BEGIN STYLESHEETS -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css' />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/materialadmin.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/material-design-iconic-font.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/toastr/toastr.css">
+
+    @Html.Partial("_FormStyles")
+
+    <link asp-append-version="true" type="text/css" rel="stylesheet" href="~/css/custom-materialize.css" />
+    <link asp-append-version="true" type="text/css" rel="stylesheet" href="~/css/site.css" />
+    <!-- Additional CSS includes -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/assets/js/libs/utils/html5shiv.js"></script>
+    <script type="text/javascript" src="/assets/js/libs/utils/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="menubar-hoverable header-fixed ">
+    <!-- BEGIN LOGIN SECTION -->
+    <section class="section-account">
+        <div class="img-backdrop" style="background-image: url('@(Url.Content("~/images/img16.jpg"))')"></div>
+        <div class="spacer"></div>
+        <br />
+        <div class="card contain-xs card-underline">
+            <div class="card-head style-primary center">
+                <header>Entrar</header>
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <form asp-action="Login" asp-controller="Usuario" method="post" role="form" class="form floating-label">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="help-block"></span>
+                            <label asp-for="Email"></label>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Senha" type="password" class="form-control" />
+                            <span asp-validation-for="Senha" class="help-block"></span>
+                            <label asp-for="Senha"></label>
+                            <p class="help-block"><a asp-action="#">Esqueceu sua senha?</a></p>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-6 text-left">
+                                <div class="checkbox checkbox-inline checkbox-styled">
+                                    <label>
+                                        <input type="checkbox" name="LembrarSenha"> <span>Remember me</span>
+                                    </label>
+                                </div>
+                            </div><!--end .col -->
+                            <div class="col-xs-6 text-right">
+                                <button class="btn btn-primary btn-raised" type="submit">Login</button>
+                            </div><!--end .col -->
+                        </div><!--end .row -->
+                    </form>
+                </div><!--end .col -->
+                <environment include="Development">
+                    @*<a asp-action="Register" asp-controller="Account">Registrar-se</a>*@
+                    <a asp-action="LogarDireto" asp-controller="Usuario" asp-route-email="manuel.cdr@gmail.com">Logar como Manuel</a>
+                    <br />
+                    <a asp-action="LogarDireto" asp-controller="Usuario" asp-route-email="leonardo@alit.com.br">Logar como Leonardo</a>
+                </environment>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+
+    <!-- BEGIN JAVASCRIPT -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @*<script src="~/lib/jquery/jquery-migrate-1.2.1.min.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/nanoscroller/jquery.nanoscroller.min.js"></script>
+    <script src="~/lib/toastr/toastr.js"></script>
+
+    @Html.Partial("_FormScripts")
+
+    <!-- Put App.js last in your javascript imports -->
+    <script asp-append-version="true" src="~/js/core/source/App.js"></script>
+    <script asp-append-version="true" src="~/js/core/source/AppNavigation.js"></script>
+    <script asp-append-version="true" src="~/js/core/source/AppForm.js"></script>
+
+    <div id="device-breakpoints"><div class="device-xs visible-xs" data-breakpoint="xs"></div><div class="device-sm visible-sm" data-breakpoint="sm"></div><div class="device-md visible-md" data-breakpoint="md"></div><div class="device-lg visible-lg" data-breakpoint="lg"></div></div>
+</body>
+</html>

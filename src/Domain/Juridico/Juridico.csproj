@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PGLaw.Domain.Juridico</AssemblyName>
+    <RootNamespace>PGLaw.Domain.Juridico</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\Interfaces\Repositories\IForumRepository.cs" />
+    <Compile Remove="Pessoas\Entities\Equipe.cs" />
+    <Compile Remove="Pessoas\Entities\Relashionships\EquipeCliente.cs" />
+    <Compile Remove="Pessoas\Entities\Relashionships\EquipePessoa.cs" />
+    <Compile Remove="Pessoas\Interfaces\Repositories\IPessoaRepository.cs" />
+    <Compile Remove="Processos\Entitties\GrupoAndamento.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoAndamento.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoCumprimento.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoCusta.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoDeposito.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoOcorrencia.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoPedido.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoPrazo.cs" />
+    <Compile Remove="Processos\Entitties\ProcessoProvidencia.cs" />
+    <Compile Remove="Processos\Entitties\TipoAcao.cs" />
+    <Compile Remove="Processos\Entitties\TipoCusta.cs" />
+    <Compile Remove="Processos\Entitties\TipoDocumento.cs" />
+    <Compile Remove="Processos\Entitties\TipoJustica.cs" />
+    <Compile Remove="Processos\Entitties\TipoNatureza.cs" />
+    <Compile Remove="Processos\Entitties\TipoPrazo.cs" />
+    <Compile Remove="Processos\Entitties\TipoProvidencia.cs" />
+    <Compile Remove="Processos\Entitties\TipoProvidenciaEnquadramento.cs" />
+    <Compile Remove="Processos\Entitties\TipoRelacao.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IGrupoAndamentoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoAndamentoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoCumprimentoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoCustaRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoDepositoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoOcorrenciaRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoParteRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoPedidoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoPrazoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoProvidenciaRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\IProcessoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoAcaoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoAndamentoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoCustaRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoDocumentoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoJusticaRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoNaturezaRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoPedidoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoPrazoRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoProvidenciaEnquadramento.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoProvidenciaRepository.cs" />
+    <Compile Remove="Processos\Interfaces\Repositories\ITipoRelacaoRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Juridico.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infra\Cross\Common\Common.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+</Project>

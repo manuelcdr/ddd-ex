@@ -1,0 +1,27 @@
+﻿@model PGLaw.Application.Sistema.Models.NivelDeAcessoVM
+
+<input asp-for="Id" type="hidden" />
+
+<div class="form-group">
+    <input asp-for="Nome" class="form-control" />
+    <span asp-validation-for="Nome"></span>
+    <label asp-for="Nome"></label>
+</div>
+
+<div class="form-group">
+    <textarea asp-for="Detalhes" class="form-control autosize" rows="1" ></textarea>
+    <span asp-validation-for="Detalhes"></span>
+    <label asp-for="Detalhes"></label>
+</div>
+
+<div class="form-group">
+    <label>Usuários</label>
+    <select asp-for="UsuariosIds" asp-items="ViewBag.Usuarios" multiple='multiple' class="searchable">
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Ferramentas</label>
+    <select asp-for="MenusIds" asp-items="ViewBag.Menus" multiple='multiple' class="searchable" >
+    </select>
+</div>

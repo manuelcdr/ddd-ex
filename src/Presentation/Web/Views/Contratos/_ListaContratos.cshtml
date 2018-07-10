@@ -1,0 +1,229 @@
+﻿@model IEnumerable<PGLaw.Application.Contratos.Models.Contratos.ContratoVM>
+
+@{
+    Decimal countAnalise = 0;
+    Decimal countAprovado = 0;
+    Decimal countVencer = 0;
+    Decimal countNaoAprovado = 0;
+    Decimal countVencidoo = 0;
+    Decimal countTotal = 0;
+}
+@if (Model.Any())
+{
+    @foreach (var item in Model)
+    {
+
+        switch (item.StatusContrato)
+        {
+            case "Em Análise":
+                countAnalise++;
+                countTotal++;
+                break;
+            case "Aprovado":
+                countAprovado++;
+                countTotal++;
+                break;
+            case "A Vencer":
+                countVencer++;
+                countTotal++;
+                break;
+            case "Não Aprovado":
+                countNaoAprovado++;
+                countTotal++;
+                break;
+            case "Vencido":
+                countVencidoo++;
+                countTotal++;
+                break;
+            default:
+                countTotal++;
+                break;
+        }
+    }
+}
+<form class="form-horizontal" id="formListaContratos">
+    <div class="row">
+        <div class="col-lg-2 col-lg-offset-1 col-md-6 col-sm-12" style="cursor:pointer" onclick="myFunctionFilterContrato('Em Análise');">
+            <div class="card  card-bordered style-info">
+                <div class="card-body small-padding ">
+                    <strong class="pull-right text-lg">@Convert.ToInt32((countAnalise / countTotal) * 100)% <i class="md md-swap-vert"></i></strong>
+                    <strong class="text-xl">@countAnalise</strong><br />
+                    <span class="opacity-50">Em Análise</span>
+
+                </div><!--end .card-body -->
+            </div><!--end .card -->
+        </div><!--end .col -->
+        <div class="col-lg-2  col-md-6 col-sm-12" style="cursor:pointer" onclick="myFunctionFilterContrato('Não Aprovado');">
+            <div class="card card-bordered style-gray">
+                <div class="card-body small-padding ">
+                    <strong class="pull-right  text-lg">@Convert.ToInt32((countNaoAprovado / countTotal) * 100)% <i class="md md-swap-vert"></i></strong>
+                    <strong class="text-xl">@countNaoAprovado</strong><br />
+                    <span class="opacity-50">Não Aprovado</span>
+                </div>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+        <div class="col-lg-2  col-md-6 col-sm-12 " style="cursor:pointer" onclick="myFunctionFilterContrato('Aprovado');">
+            <div class="card  card-bordered style-success">
+                <div class="card-body small-padding ">
+                    <strong class="pull-right  text-lg">@Convert.ToInt32((countAprovado / countTotal) * 100)% <i class="md md-trending-up"></i></strong>
+                    <strong class="text-xl">@countAprovado</strong><br />
+                    <span class="opacity-50">Aprovado</span>
+                </div><!--end .card-body -->
+            </div><!--end .card -->
+        </div><!--end .col -->
+        <div class="col-lg-2  col-md-6 col-sm-12 " style="cursor:pointer" onclick="myFunctionFilterContrato('Vencendo');">
+            <div class="card card-bordered style-warning">
+                <div class="card-body small-padding">
+                    <strong class="pull-right text-lg">@Convert.ToInt32((countVencer / countTotal) * 100)% <i class="md md-trending-down"></i></strong>
+                    <strong class="text-xl">@countVencer</strong><br />
+                    <span class="opacity-50">Vencendo</span>
+                </div><!--end .card-body -->
+            </div><!--end .card -->
+        </div><!--end .col -->
+        <div class="col-lg-2  col-md-6 col-sm-12" style="cursor:pointer" onclick="myFunctionFilterContrato('Vencido');">
+            <div class="card card-bordered style-danger">
+                <div class="card-body small-padding ">
+                    <strong class="pull-right  text-lg">@Convert.ToInt32((countVencidoo / countTotal) * 100)% <i class="md md-swap-vert"></i></strong>
+                    <strong class="text-xl">@countVencidoo</strong><br />
+                    <span class="opacity-50">Vencido</span>
+                </div>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+
+    </div>
+
+    <div id="card-contratos" class="card">
+        <div class="card-body">
+            @*<form asp-action="Edit" asp-controller="Contratos" method="get" class="form-horizontal no-y-padding focus" role="form"
+                data-ajax-begin="onBegin" data-ajax-complete="onComplete"
+                data-ajax-failure="onFailed" data-ajax-success="onSuccess"
+                data-ajax="true" data-ajax-method="GET">*@
+            <button type="button" class="btn btn-icon-toggle btn-primary" data-toggle="modal" data-target="#formModalEdit" onclick="EditContrato(this);" asp-action="Create" asp-controller="Contratos"><i class="md md-my-library-add"></i></button>
+            <button type="button" class="btn btn-icon-toggle btn-primary" data-toggle="modal" data-target="#formListaContratos" onclick="RefreshListaContratos(this);" asp-action="Filter" asp-controller="Contratos"><i class="md md-refresh"></i></button>
+            <div id="partial-container" class="table-responsive">
+                <div class="small-padding style-primary-dark" style="display:none">
+                    <p class="text-light text-right no-margin">A busca retornou <strong>@(Model?.Count() ?? 0)</strong> resultados</p>
+                </div>
+
+
+
+                @if (Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table id="tableContratos" class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="sort-alpha col-lg-3">Razão Social</th>
+                                    <th class="sort-alpha">Tipo</th>
+                                    <th class="sort-alpha">Ativo</th>
+                                    <th class="sort-alpha">Grência</th>
+                                    <th class="sort-alpha">Assinatura</th>
+                                    <th class="sort-alpha">Vencimento</th>
+                                    <th class="sort-alpha">Status</th>
+                                    <th class="sort-alpha">Vigência</th>
+                                    @*<th class="sort-alpha">Índice Reajuste</th>
+                                        <th class="sort-alpha">Juros</th>
+                                        <th class="sort-alpha">Multa</th>*@
+                                    <th class="sort-alpha" style="text-align:Center">Opção</th>
+                                </tr>
+                            </thead>
+                            <tbody class="">
+                                @foreach (var item in Model)
+                                {
+
+                                    var classe = "";
+
+                                    switch (item.StatusContrato)
+                                    {
+                                        case "Em Análise":
+                                            //classe = "style-info";
+                                            break;
+                                        case "Aprovado":
+                                            //classe = "style-success  opacity-75";
+                                            break;
+                                        case "A Vencer":
+                                            classe = "warning ";
+                                            break;
+                                        case "Não Aprovado":
+                                            //classe = "style-gray";
+                                            break;
+                                        case "Vencido":
+                                            classe = "style-danger opacity-75";
+                                            break;
+                                    }
+
+                                    <tr class="text-sm @classe">
+                                        <td>@item.RazaoSocial</td>
+                                        <td>@item.Tipo.Descricao</td>
+                                        <td>@item.Ativo</td>
+                                        <td>@item.Gerencia.Descricao</td>
+                                        <td>@item.DataAssinatura.ToShortDateString()</td>
+                                        <td>@item.DataVencimento.GetValueOrDefault().ToShortDateString()</td>
+                                        <td>@item.StatusContrato</td>
+                                        <td>@item.Vigencia.Descricao</td>
+
+                                        @*<td>@item.IndiceReajuste.Descricao</td>
+                                            <td>@item.Juros</td>
+                                            <td>@item.Multa</td>*@
+                                        <td>
+                                            @*<a class="btn btn-flat ink-reaction btn-default" href="@Url.Action("Detalhes", new { id = item.Id })">
+                                                    <i class="md md-description"></i>
+                                                </a>*@
+
+                                            @*<a class="btn btn-flat ink-reaction btn-default" data-toggle="modal" data-target="#formModalEdit"  asp-action="Edit" asp-controller="Contratos" asp-route-Id="@item.Id" title="Editar">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>*@
+
+                                            <button type="button" class="btn btn-icon-toggle" data-toggle="modal" data-target="#formModalEdit" onclick="EditContrato(this);" asp-action="Edit" asp-controller="Contratos" asp-route-id="@item.Id"><i class="fa fa-pencil"></i></button>
+                                            <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row" onclick="EditContrato(this);" asp-action="Delete" asp-controller="Contratos" asp-route-id="@item.Id"><i class="fa fa-trash-o"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <script>
+                        $(function () {
+                            toastr.warning("Sua busca não retornou resultados");
+                        })
+                    </script>
+                }
+
+            </div>
+
+            @*</form>*@
+        </div><!--end .card-body -->
+    </div><!--end .card -->
+</form>
+
+<script>
+
+    $(function () {
+
+        $('#tableContratos').DataTable({
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "tableTools": {
+                "sSwfPath": $('#table1').data('swftools')
+            },
+            "language": {
+                "lengthMenu": '_MENU_ resultados por página',
+                "search": '<i class="fa fa-search"></i>',
+                "info": "mostrando _START_ até _END_ de _TOTAL_ resultados",
+                "infoEmpty": "sem resultados",
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+    })
+</script>
+
+

@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Processos";
+}
+
+<div id="card-lista-processos" class="card">
+    <div class="card-body style-primary form-inverse">
+        <form asp-action="BuscarProcessos" asp-controller="Processos" method="get" class="form-horizontal no-y-padding focus" role="form"
+              data-ajax-begin="onBegin" data-ajax-complete="onComplete"
+              data-ajax-failure="onFailed" data-ajax-success="onSuccess"
+              data-ajax="true" data-ajax-method="GET">
+            <div class="row">
+                <div id="form-group-pesquisa" class="form-group floating-label no-margin">
+                    <div class="input-group">
+                        <div class="input-group-content">
+                            <input type="text" id="pesquisa" name="pesquisa" class="form-control" />
+                        </div>
+                        <div class="input-group-btn">
+                            <button id="btn-buscar" class="btn btn-floating-action btn-primary-dark" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="partial-container" class="card-body no-padding">
+
+    </div>
+
+
+</div>
+
+
+@section scripts {
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        var onBegin = function () {
+            var card = $('#card-lista-processos');
+            materialadmin.AppCard.addCardLoader(card);
+        };
+
+        var onComplete = function () {
+            var card = $('#card-lista-processos');
+            materialadmin.AppCard.removeCardLoader(card);
+        };
+
+        var onSuccess = function (context) {
+            $('#partial-container').html(context);
+        };
+
+        var onFailed = function (context) {
+            toastr.error("Ops! Ocorreu alguma falha.");
+        };
+    </script>
+
+
+
+    @*<script>
+
+            function buscarProcessos() {
+                $.ajax({
+                        url: '@Url.Action("BuscarProcessos")',
+                        data: $('#form-pesquisa').serialize(),
+                        dataType: 'html',
+                        success: function (data) {
+                            $('#partial-container').html(data);
+                            $('#form-group-pesquisa').removeClass('has-error');
+                        },
+                        error: function (jq, status, error) {
+                            console.log('erro');
+                            console.log(jq.status)
+                            if (jq.status == 406) {
+                                if (!$('#form-group-pesquisa').hasClass('has-error')) {
+                                    $('#form-group-pesquisa').addClass('has-error');
+                                }
+                            }
+                        }
+                    });
+            }
+
+            $(function () {
+
+                $(document).ajaxStart(function () {
+                    var card = $('#card-lista-pessoas');
+                    materialadmin.AppCard.addCardLoader(card);
+                });
+                $(document).ajaxStop(function () {
+                    var card = $('#card-lista-pessoas');
+                    materialadmin.AppCard.removeCardLoader(card);
+                });
+
+                $('#form-pesquisa').submit(function (e, h) {
+                    e.preventDefault();
+                    buscarProcessos();
+                })
+            });
+        </script>*@
+}
+
+
+

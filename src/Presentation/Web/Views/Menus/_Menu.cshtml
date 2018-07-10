@@ -1,0 +1,36 @@
+﻿@model PGLaw.Application.Sistema.Models.MenuVM
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="MenuPaiId" type="hidden" />
+<input asp-for="MenuPaiTitulo" type="hidden" />
+<input asp-for="Ordem" type="hidden" />
+<input asp-for="Ferramenta" type="hidden" />
+<input asp-for="Raiz" type="hidden" />
+<input asp-for="Tipo" type="hidden" />
+
+<div class="form-group">
+    <input asp-for="Titulo" class="form-control" />
+    <span asp-validation-for="Titulo"></span>
+    <label asp-for="Titulo"></label>
+</div>
+
+@if (Model.Ferramenta)
+{
+    <div class="form-group">
+        <input asp-for="Url" class="form-control" />
+        <span asp-validation-for="Url"></span>
+        <label asp-for="Url"></label>
+    </div>
+}
+else
+{
+    <input asp-for="Url" type="hidden" />
+}
+
+@*
+    <div class="form-group" >
+        <input asp-for="Ordem" class="form-control" />
+        <span asp-validation-for="Ordem"></span>
+        <label asp-for="Ordem"></label>
+    </div>
+*@

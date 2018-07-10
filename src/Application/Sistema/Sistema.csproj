@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PGLaw.Application.Sistema</AssemblyName>
+    <RootNamespace>PGLaw.Application.Sistema</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Remove="AutoMapper\ViewModelToDomainProfile.cs" />
+    <Compile Remove="Interfaces\Services\IGeradorDadosIniciaisSistema.cs" />
+    <Compile Remove="Interfaces\Services\IMenuAppServices.cs" />
+    <Compile Remove="Interfaces\Services\INivelDeAcessoAppServices.cs" />
+    <Compile Remove="Services\MenuAppServices.cs" />
+    <Compile Remove="Services\NivelDeAcessoAppServices.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="PGLaw.Application.Sistema.csproj.vspscc" />
+    <None Remove="Sistema.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Core\Core.csproj" />
+    <ProjectReference Include="..\..\Domain\Juridico\Juridico.csproj" />
+    <ProjectReference Include="..\..\Domain\Sistema\Sistema.csproj" />
+    <ProjectReference Include="..\..\Infra\Cross\AspNetFilters\AspNetMvc.csproj" />
+    <ProjectReference Include="..\..\Infra\Cross\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Infra\Cross\Identity\Identity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Identity.Core">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.identity.core\2.0.1\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

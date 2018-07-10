@@ -1,0 +1,57 @@
+﻿@*@model IEnumerable<PgLaw.Apresentacao.Web.App.Models.Processo.ArquivoProcessoVM>*@
+
+<div class="list-tags lista">
+    @*@foreach (var arquivo in Model)
+    {
+        var tipo = arquivo.Arquivo.Nome.Split('.').LastOrDefault().ToLower();
+        var icone = "";
+        switch (tipo)
+        {
+            case "docx":
+                icone = "fa fa-file-word-o";
+                break;
+            case "doc":
+                icone = "fa fa-file-word-o";
+                break;
+            case "pdf":
+                icone = "fa fa-file-pdf-o";
+                break;
+            case "png":
+                icone = "fa fa-file-image-o";
+                break;
+            case "jpg":
+                icone = "fa fa-file-image-o";
+                break;
+            case "jpeg":
+                icone = "fa fa-file-image-o";
+                break;
+            case "gif":
+                icone = "fa fa-file-image-o";
+                break;
+            case "xlsx":
+                icone = "fa fa-file-excel-o";
+                break;
+            case "xls":
+                icone = "fa fa-file-excel-o";
+                break;
+            case "zip":
+                icone = "fa fa-file-zip-o";
+                break;
+            case "7z":
+                icone = "fa fa-file-zip-o";
+                break;
+            case "rar":
+                icone = "fa fa-file-zip-o";
+                break;
+            case "txt":
+                icone = "fa fa-file-text-o";
+                break;
+            default:
+                icone = "fa fa-file-o";
+                break;
+        }*@
+        @*<a class="btn btn-info item" href="@Url.Action("ObterArquivo", new { processoId = ViewBag.ProcessoId, fileName = arquivo.Arquivo.Nome, type = arquivo.Arquivo.Tipo })">
+            <i class="@icone"></i><span class="nome detalhes">&nbsp;&nbsp;@(string.IsNullOrEmpty(arquivo.Tipo) ? "" : arquivo.Tipo + ":") @arquivo.Arquivo.Nome</span>
+        </a>*@
+    }
+</div>

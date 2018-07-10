@@ -1,0 +1,635 @@
+﻿@model PGLaw.Application.Juridico.Models.Processos.PosCadastroProcessoVM
+@using PGLaw.Infra.Cross.Common.Enums
+
+@section styles{
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/wizard/wizard.css" />
+}
+
+<div class="card" id="cadastroWizard">
+    <div class="card-head style-primary">
+        <header id="headerWizard">Processo</header>
+    </div><!--end .card-head -->
+    <div class="card-body ">
+        <div id="rootwizard" class="form-wizard form-wizard-horizontal">
+            <form id="form" asp-action="Create" method="post" class="form">
+
+                <input type='hidden' asp-for="ClienteId" />
+                <input type='hidden' asp-for="NumeroInstancia" />
+                <input type='hidden' asp-for="TipoProcesso" />
+                <input type='hidden' asp-for="NumeroProcesso" />
+                <input type='hidden' asp-for="NumeroPrimeiraInstancia" />
+                <input type='hidden' asp-for="NumeroSegundaInstancia" />
+                <input type='hidden' asp-for="NumeroTerceiraInstancia" />
+
+                <div class="form-wizard-nav">
+                    <div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
+                    <ul class="nav nav-justified">
+                        <li class="active"><a href="#step2" data-toggle="tab"><span class="step">1</span> <span class="title">PESSOAS</span></a></li>
+                        <li><a href="#step3" data-toggle="tab"><span class="step">2</span> <span class="title">DADOS JURÍDICOS</span></a></li>
+                        <li><a href="#step4" data-toggle="tab"><span class="step">3</span> <span class="title">ÁREA DE NEGÓCIO</span></a></li>
+                        <li id="ultimo-tab"><a href="#step5" data-toggle="tab"><span class="step">4</span> <span class="title">PEDIDOS E VALORES</span></a></li>
+                    </ul>
+                </div><!--end .form-wizard-nav -->
+                <div class="tab-content clearfix">
+                    <div class="tab-pane active" id="step2">
+                        <br /><br />
+                        <div class="card">
+                            <div class="card-head card-head-xs style-default-light">
+                                <header><small>Adicionar Pessoas</small></header>
+                            </div>
+                            <div id="form-add-pessoa" class="card-body small-padding no-bottom-padding style-default-light underlined">
+                                <div class="col-lg-2 col-md-5 col-sm-12">
+                                    <div class="form-group">
+                                        <select id="AddPessoaTipoRelacao" name="AddPessoaTipoRelacao" asp-items="ViewBag.TipoRelacao" class="form-control" data-val="true" data-val-required="The field is required.">
+                                            <option value=""></option>
+                                        </select>
+                                        <span class="field-validation-valid" data-valmsg-for="AddPessoaTipoRelacao" data-valmsg-replace="true"></span>
+                                        <label for="AddPessoaTipoRelacao">Relação</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-7 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="AddPessoaNome" name="AddPessoaNome" class="form-control" data-val="true" data-val-required="The field is required." />
+                                        <span class="field-validation-valid" data-valmsg-for="AddPessoaNome" data-valmsg-replace="true"></span>
+                                        <label for="AddPessoaNome">Nome</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-5 col-sm-12 text-center">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline radio-styled">
+                                                <input type="radio" name="AddPessoaTipo" value="@TipoPessoa.Fisica" class="" data-val="true" data-val-required="The field is required."><span>Física</span>
+                                            </label>
+                                            <label class="radio-inline radio-styled">
+                                                <input type="radio" name="AddPessoaTipo" value="@TipoPessoa.Juridica" class=""><span>Jurídica</span>
+                                            </label>
+                                            <span class="field-validation-valid" data-valmsg-for="AddPessoaTipo" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-7 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="AddPessoaDocumento" name="AddPessoaDocumento" class="form-control" />
+                                        <span class="field-validation-valid" data-valmsg-for="AddPessoaDocumento" data-valmsg-replace="true"></span>
+                                        <label>CPF / CNPJ</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-1 col-md-1 col-sm-12 text-center">
+                                    <div class="form-group">
+                                        <a id="addPessoa" class="btn btn-flat ink-reaction btn-primary btn-lg">
+                                            <i class="md md-person-add"></i>
+                                        </a>
+                                        @*<button id="addPessoaButton" type="button" class="btn btn-flat ink-reactio btn-primary btn-lg" data-toggle="tooltip" data-placement="right" data-original-title="Adicionar Pessoa"><i class="md md-person-add"></i></button>*@
+                                        <label></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body no-padding">
+                                <table id="listPessoas" class="table table-condensed no-margin small-padding" style="display: none;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 50px;"></th>
+                                            <th>Nome</th>
+                                            <th>Relação</th>
+                                            <th>CPF/CNPJ</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!--end #step2 -->
+                    <div class="tab-pane" id="step3">
+                        <br /><br />
+
+                        <div class="col-lg-5 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="JusticaId" asp-items="ViewBag.Justica" class="form-control combo-cascade"
+                                        data-combo-update="#OrgaoId|#AddPedidoTipo"
+                                        data-url="@Url.Action("PreencherOrgao")|@Url.Action("PreencherTipoPedido")">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="JusticaId"></span>
+                                <label asp-for="JusticaId"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="OrgaoId" asp-items="ViewBag.Natureza" class="form-control combo-cascade"
+                                        data-combo-update="#TipoAcaoId"
+                                        data-url="@Url.Action("PreencherTipoAcao")">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="OrgaoId"></span>
+                                <label asp-for="OrgaoId"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="TipoAcaoId" asp-items="ViewBag.TipoAcao" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="TipoAcaoId"></span>
+                                <label asp-for="TipoAcaoId"></label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="EstadoId" asp-items="ViewBag.Estado" class="form-control combo-cascade"
+                                        data-combo-update="#CidadeId"
+                                        data-url="@Url.Action("PreencherCidade")">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="EstadoId"></span>
+                                <label asp-for="EstadoId"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-10 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="CidadeId" asp-items="ViewBag.Cidades" data-combo-update="#ForumId" data-url="@Url.Action("PreencherForum")" class="form-control combo-cascade">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="CidadeId"></span>
+                                <label asp-for="CidadeId"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="ForumId" asp-items="ViewBag.Forum" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="ForumId"></span>
+                                <label asp-for="ForumId"></label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Vara" type="text" class="form-control" />
+                                <span asp-validation-for="Vara"></span>
+                                <label asp-for="Vara"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="DataDistribuicao" type="text" class="form-control datepicker" />
+                                <span asp-validation-for="DataDistribuicao"></span>
+                                <label asp-for="DataDistribuicao"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="DataCitacao" type="text" class="form-control datepicker" />
+                                <span asp-validation-for="DataCitacao"></span>
+                                <label asp-for="DataCitacao"></label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <input asp-for="Ano" type="text" class="form-control" data-inputmask="'mask': '9999'" />
+                                <span asp-validation-for="Ano"></span>
+                                <label asp-for="Ano"></label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="checkbox checkbox-styled">
+                                <label>
+                                    <input asp-for="ProcessoEletronico" type="checkbox" value="true">
+                                    <span>Processo Eletrônico</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div><!--end #step3 -->
+                    <div class="tab-pane" id="step4">
+                        <br /><br />
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="FamiliaOfensoraId" asp-items="ViewBag.FamiliaOfensora" class="form-control combo-cascade"
+                                        data-parametros-campos="ClienteId"
+                                        data-combo-update="#AreaOfensoraId"
+                                        data-url="@Url.Action("PreencherAreaOfensora")">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="FamiliaOfensoraId"></span>
+                                <label asp-for="FamiliaOfensoraId"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="AreaOfensoraId" asp-items="ViewBag.AreaOfensora" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="AreaOfensoraId"></span>
+                                <label asp-for="AreaOfensoraId"></label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="MotivoAcionamentoId" asp-items="ViewBag.MotivoAcionamento" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="MotivoAcionamentoId"></span>
+                                <label asp-for="MotivoAcionamentoId"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <select asp-for="CausaRealId" asp-items="ViewBag.CausaReal" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="CausaRealId"></span>
+                                <label asp-for="CausaRealId"></label>
+                            </div>
+                        </div>
+                    </div><!--end #step4 -->
+                    <div class="tab-pane" id="step5">
+                        <br /><br />
+                        <div class="col-lg-12 col-sm-12 ">
+                            <div class="card">
+                                <div class="card-head card-head-xs style-default-light">
+                                    <header><small>Adicionar Pedidos</small></header>
+                                </div>
+                                <div id="form-add-pedido" class="card-body small-padding no-bottom-padding style-default-light underlined">
+                                    <div class="col-lg-4 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <select id="AddPedidoTipo" name="AddPedidoTipo" asp-items="ViewBag.Pedido" class="form-control ignore" data-val="true" data-val-required="The field is required.">
+                                                <option value=""></option>
+                                            </select>
+                                            <label>Pedido</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">R$</span>
+                                                <div class="input-group-content">
+                                                    <input type="text" id="ValorPedidoIndividual" class="form-control currency" />
+                                                    <label>Valor Pedido</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">R$</span>
+                                                <div class="input-group-content">
+                                                    <input type="text" id="ValorProvisaoIndividual" class="form-control currency" />
+                                                    <label>Valor Provisão</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <select id="RiscoIndividual" asp-items="ViewBag.Risco" class="form-control">
+                                                <option value=""></option>
+                                            </select>
+                                            <label>Risco</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-1 col-md-12 col-sm-12 text-center">
+                                        <div class="form-group">
+                                            <a id="addPedido" class="btn btn-flat ink-reaction btn-primary btn-lg">
+                                                <i class="md md-my-library-add"></i>
+                                            </a>
+                                            <label></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body no-padding">
+                                    <table id="listPedidos" class="table table-condensed no-margin small-padding" style="display: none;">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Valor Pedido</th>
+                                                <th>Valor Provisório</th>
+                                                <th>Risco</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="card-body small-padding no-bottom-padding style-gray-dark form-inverse">
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
+                                        <div class="form-group">
+                                            <select asp-for="RiscoId" asp-items="ViewBag.Risco" class="form-control">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="RiscoId"></span>
+                                            <label asp-for="RiscoId"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">R$</span>
+                                                <div class="input-group-content">
+                                                    <input asp-for="ValorCausa" type="text" class="form-control currency ignore" />
+                                                    <label asp-for="ValorCausa">Valor Pedido</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
+                                        @*<div class="form-group">
+                                    <input asp-for="ValorPedido" type="text" class="form-control" />
+                                    <span asp-validation-for="ValorPedido"></span>
+                                    <label asp-for="ValorPedido"></label>
+                                </div>*@
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
+                                        @*<div class="form-group">
+                                    <input asp-for="ValorProvisao" type="text" class="form-control" />
+                                    <span asp-validation-for="ValorProvisao"></span>
+                                    <label asp-for="ValorProvisao"></label>
+                                </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end .tab-content -->
+                <ul class="pager wizard">
+                    <li class="previous"><button type="button" class="btn btn-floating-action btn-default"> <i class="md md-navigate-before"></i> </button></li>
+                    <li class="finish hidden"><button type="submit" class="btn btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" data-original-title="Salvar"><i class="md md-done-all"></i></button></li>
+                    <li class="next"><button type="button" class="btn btn-floating-action btn-default"><i class="md md-navigate-next"></i></button></li>
+                </ul>
+            </form>
+        </div><!--end #rootwizard -->
+    </div><!--end .card-body -->
+</div><!--end .card -->
+<!-- END VALIDATION FORM WIZARD -->
+@*<div class="fixed-action-left-btn">
+        <a class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-left" data-toggle="tooltip" data-placement="top" data-original-title="Voltar" href="/Processos"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    </div>*@
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/lib/wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script asp-append-version="true" src="~/js/core/source/AppWisard.js"></script>
+
+    <script>
+
+        // para funcionar a validação dos campos selects com busca (Hidden)
+        $.validator.setDefaults({ ignore: '.tab-pane:not(.active) :hidden, .ignore' });
+
+
+        // events
+
+        function mudarMascaraDocumento() {
+            var tipoPessoa = $(this).val();
+
+            if (tipoPessoa == '@(TipoPessoa.Fisica)') {
+                $('#AddPessoaDocumento').inputmask('999.999.999-99');
+                $("#AddPessoaDocumento").rules("add", {cpf: true});
+                $("#AddPessoaDocumento").rules("remove", "cnpj");
+            }
+
+            if (tipoPessoa == '@(TipoPessoa.Juridica)'){
+                $('#AddPessoaDocumento').inputmask('99.999.999/9999-99');
+                $("#AddPessoaDocumento").rules("add", { cnpj: true });
+                $("#AddPessoaDocumento").rules("remove", "cpf");
+            }
+        }
+
+
+        function ignorar(seletor) {
+            $(seletor).addClass('ignore');
+        };
+
+        function considerar(seletor) {
+            $(seletor).removeClass('ignore');
+        };
+
+        function validarFormulario() {
+            var form = $('.form-wizard').find('form');
+            var valid = form.validate().form();
+            form.data('validator').focusInvalid();
+            return valid;
+        }
+
+        function resetarCamposFilhos(seletorPai) {
+            $(seletorPai).find(':input[type=text]').val('').trigger('change');
+            $(seletorPai).find(':input[type=radio]:checked').removeAttr('checked').trigger('change');
+            $(seletorPai).find(':input[type=checkbox]:checked').removeAttr('checked').trigger('change');
+            $(seletorPai).find('select').val('').trigger('change');
+        }
+
+        // pessoa
+
+        function adicionarPessoa(relacaoValor, relacaoTexto, nome, tipoPessoa, documento) {
+            var icone = (tipoPessoa == '@(TipoPessoa.Fisica)' ? "md md-person" : "md md-business");
+
+            var newRow = `<tr class='ProcessoPessoa'>
+                                <td class="text-center">
+                                    <input type='hidden' name='ProcessoPessoas.TipoPessoa' value='${tipoPessoa}' />
+                                    <span>
+                                        <i class="${icone}"></i>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type='hidden' name='ProcessoPessoas.Nome' value='${nome}'/>
+                                    ${nome}
+                                </td>
+                                <td>
+                                    <input type='hidden' name='ProcessoPessoas.TipoRelacaoId' value='${relacaoValor}'/>
+                                    ${relacaoTexto}
+                                </td>
+                                <td>
+                                    <input type='hidden' name='ProcessoPessoas.Documento' value='${documento}'/>
+                                    ${documento}
+                                </td>
+                                <td class="text-right">
+                                    <button type='button' class="btn btn-icon-toggle" onclick="removerPessoa(this)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                        </tr>`;
+
+            $('#listPessoas').show();
+            $(newRow).appendTo("#listPessoas tbody");
+
+        };
+
+        function removerPessoa(handler) {
+            var listRow = $(handler).closest('li,tr');
+            listRow.remove();
+        };
+
+        function resetarCamposAddPessoa() {
+            resetarCamposFilhos('#form-add-pessoa');
+        };
+
+
+        // pedido
+
+        function removerTipoPedidoOption(valor) {
+            $(`#AddPedidoTipo option[value=${valor}]`).remove();
+            $(`#AddPedidoTipo`).val('').trigger('change');
+        }
+
+        function adicionarTipoPedidoOption(texto, valor) {
+            var option = new Option(texto, valor);
+            $(`#AddPedidoTipo`).append(option).trigger('change');
+        }
+
+        function adicionarPedido(tipoValor, tipoTexto, valorPedido, valorProvisao, riscoValor, riscoTexto) {
+            var newRow = `<tr>
+                                <td>
+                                    <input type='hidden' name='ProcessoPedidos.TipoId' value='${tipoValor}'/>
+                                    <span class='TipoPedidoTexto'>${tipoTexto}</span>
+                                </td>
+                                <td>
+                                    <input type='hidden' name='ProcessoPedidos.ValorPedido' value='${valorPedido}'/>
+                                    R$ ${valorPedido != '' ? valorPedido : '0,00'}
+                                </td>
+                                <td>
+                                    <input type='hidden' name='ProcessoPedidos.ValorProvisao' value='${valorProvisao}'/>
+                                    <span>R$ ${valorProvisao != '' ? valorProvisao : '0,00'}</span>
+                                </td>
+                                <td>
+                                    <input type='hidden' name='ProcessoPedidos.RiscoId' value='${riscoValor}'/>
+                                    ${riscoTexto}
+                                </td>
+                                <td class="text-right">
+                                    <button type='button' class="btn btn-icon-toggle" onclick="removerPedido(this)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                        </tr>`;
+
+            $('#listPedidos').show();
+            $(newRow).appendTo("#listPedidos tbody");
+        };
+
+        function removerPedido(handler) {
+            var tr = $(handler).closest('tr');
+            var valorTipo = tr.find('[name=TipoPedido]').val();
+            var textoTipo = tr.find('.TipoPedidoTexto').text();
+
+            adicionarTipoPedidoOption(textoTipo, valorTipo);
+
+            tr.remove();
+        };
+
+        function resetarCamposAddPedido() {
+            resetarCamposFilhos('#form-add-pedido');
+        };
+
+
+        $(function () {
+            $(":input").inputmask();
+            $(':input.currency').inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                autoGroup: true,
+                'digits': 2,
+                'radixPoint': ",",
+                digitsOptional: false,
+                'allowMinus': false,
+                placeholder: "0",
+                clearMaskOnLostFocus: true
+            });
+            $('select').select2();
+
+            $('input[name=AddPessoaTipo]').change(mudarMascaraDocumento);
+
+            $("#addPessoa").click(function () {
+
+                // redefinir validação para adicionar pedido
+                ignorar('.tab-pane.active :input, .tab-pane.active select');
+                considerar('#form-add-pessoa :input, #form-add-pessoa select');
+
+                var valido = validarFormulario();
+
+                if (valido) {
+
+                    var ValTipoRelacao = $("#AddPessoaTipoRelacao option:selected").val();
+                    var TextTipoRelacao = $("#AddPessoaTipoRelacao option:selected").text();
+
+                    var NomeParte = $("#AddPessoaNome").val();
+                    var ValTipoPessoa = $('input[name=AddPessoaTipo]:checked').val();
+                    var documento = $("#AddPessoaDocumento").val();
+
+                    adicionarPessoa(ValTipoRelacao, TextTipoRelacao, NomeParte, ValTipoPessoa, documento);
+
+                    resetarCamposAddPessoa();
+                }
+
+                considerar('.tab-pane.active :input, .tab-pane.active select');
+                ignorar('#form-add-pessoa :input, #form-add-pessoa select');
+            });
+
+            $("#addPedido").click(function () {
+
+                // redefinir validação para adicionar pedido
+                ignorar('#step5 :input, #step5 select');
+                considerar('#AddPedidoTipo');
+
+                var valido = validarFormulario();
+
+                if (valido) {
+
+                    var ValTipoPedido = $("#AddPedidoTipo option:selected").val();
+                    var TextTipoPedido = $("#AddPedidoTipo option:selected").text();
+
+                    var ValorPedido = $("#ValorPedidoIndividual").val();
+                    var ValorProvisao = $("#ValorProvisaoIndividual").val();
+
+                    var ValRisco = $("#RiscoIndividual option:selected").val();
+                    var TextRisco = $("#RiscoIndividual option:selected").text();
+
+                    adicionarPedido(ValTipoPedido, TextTipoPedido, ValorPedido, ValorProvisao, ValRisco, TextRisco);
+
+                    removerTipoPedidoOption(ValTipoPedido);
+
+                    resetarCamposAddPedido();
+                }
+
+                // voltar validação original
+                considerar('#step5 input:not([name=ValorCausa]), #step5 select');
+                ignorar('#AddPedidoTipo');
+            });
+
+            $('#form').submit(function () {
+                alterarNameParaArray('ProcessoPessoas.TipoPessoa');
+                alterarNameParaArray('ProcessoPessoas.Nome');
+                alterarNameParaArray('ProcessoPessoas.TipoRelacaoId');
+                alterarNameParaArray('ProcessoPessoas.Documento');
+
+                alterarNameParaArray('ProcessoPedidos.TipoId');
+                alterarNameParaArray('ProcessoPedidos.ValorPedido');
+                alterarNameParaArray('ProcessoPedidos.ValorProvisao');
+                alterarNameParaArray('ProcessoPedidos.RiscoId');
+            })
+
+            function alterarNameParaArray(name) {
+                var processoPessoasTipos = $(`[name="${name}"]`);
+
+                processoPessoasTipos.each(function (index, element) {
+                    let $pessoaTipo = $(this);
+
+                    var primeiraParte = name.split('.')[0];
+                    var segundaParte = name.split('.')[1];
+
+                    $pessoaTipo.attr("name", `${primeiraParte}[${index}].${segundaParte}`);
+                });
+            }
+
+        });
+
+    </script>
+}
+

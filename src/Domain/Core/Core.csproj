@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PGLaw.Domain.Core</AssemblyName>
+    <RootNamespace>PGLaw.Domain.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DomainServices\**" />
+    <EmbeddedResource Remove="DomainServices\**" />
+    <None Remove="DomainServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\DomainServices\IDomainServicesFull.cs" />
+    <Compile Remove="Interfaces\Repositories\IRepository.cs" />
+    <Compile Remove="Interfaces\Repositories\IRepositoryRead.cs" />
+    <Compile Remove="Interfaces\Repositories\IRepositoryWrite.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Core.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\AppServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fluentValidation" Version="7.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infra\Cross\Common\Common.csproj" />
+  </ItemGroup>
+
+</Project>

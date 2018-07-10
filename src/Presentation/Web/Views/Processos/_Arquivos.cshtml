@@ -1,0 +1,117 @@
+﻿@*@model IEnumerable<PgLaw.Apresentacao.Web.App.Models.Processo.ArquivoProcessoVM>*@
+
+@*@using (Ajax.BeginForm("AtualizarArquivos", null, new AjaxOptions { HttpMethod = "Get", OnBegin = "ArquivosOnBegin", OnComplete = "ArquivosOnComplete", UpdateTargetId = "arquivos-container" }, new { @class = "no-margin no-padding", id = "form-arquivos-anexos" }))
+{
+    <input type="hidden" name="processoId" value="@ViewBag.ProcessoId" />
+}*@
+
+<div class="card no-margin card-collapsable no-card-shadow no-shadow card-printable" id="card-arquivos">
+    <div class="card-head card-head-xs">
+        <div class="card-header text-center">
+            <header class="text-light text-center">Arquivos</header>
+            <div class="btn-group">
+                <a class="btn btn-collapse"><i class="md md-expand-more"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body no-bottom-margin no-bottom-padding container-lista-pesquisavel">
+        <div class="row">
+            <div class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="pesquisa" class="col-xs-2 col-sm-1 control-label">Pesquisar</label>
+                    <div class="col-sm-3 col-xs-9">
+                        <input class="form-control pesquisa" id="pesquisa-arquivos" name="pesquisa-arquivos" type="text" value="@(ViewBag.Pesquisa ?? "")">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="arquivos-container" class="row">
+            @*@Html.Partial("_ArquivosAnexos", Model)*@
+        </div>
+    </div>
+
+    <div class="card-body no-bottom-margin no-bottom-padding">
+        @*<div class="contain-sm">*@
+        <div class="card card-outlined border-dashed style-info no-margin no-shadow">
+            <div class="card-body no-padding">
+                @*@using (Ajax.BeginForm("AdicionarArquivos", null, new AjaxOptions { HttpMethod = "Post" }, new { @class = "form-horizontal dropzone no-margin", id = "my-awesome-dropzone" }))
+                {*@
+                    var tipos = new string[] { "", "teste", "prazo" };
+
+                    @*<input type="hidden" name="ProcessoId" value="@ViewBag.ProcessoId" />*@
+
+                    <div class="form-group">
+                        <label for="arquivo-tipo" class="col-sm-offset-3 col-xs-3 col-sm-2 control-label">Tipo de Arquivo</label>
+                        <div class="col-sm-3 col-xs-9">
+                            @*@Html.DropDownList("Tipo", new SelectList(tipos), new { id = "arquivo-tipo", @class = "form-control select2", data_placeholder = "Selecione o tipo de arquivo" })*@
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="dz-message">
+                        <h3 class="text-default-light">Clique ou arraste os arquivos aqui.</h3>
+                        @*<em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>*@
+                    </div>
+                    <div class="fallback">
+                        <input name="file" type="file" multiple />
+                    </div>
+                @*}*@
+            </div>
+            <div class="card-actionbar no-padding">
+                <div class="card-actionbar-row centered">
+                    <button id="btn-adicionar-arquivos" data-loading-text="adicionando arquivos" type="button" class="btn btn-flat ink-reaction btn-info disabled">Adicionar arquivos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+</div>
+
+<script>
+
+    function ArquivosOnBegin() {
+        var card = $('#card-arquivos');
+        materialadmin.AppCard.addCardLoader(card);
+    }
+
+    function ArquivosOnComplete() {
+        var card = $('#card-arquivos');
+        materialadmin.AppCard.removeCardLoader(card);
+        materialadmin.AppFormListaPesquisavel.AtualizarListagens();
+    }
+
+    $(function () {
+        Dropzone.options.myAwesomeDropzone = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 3, // MB
+            uploadMultiple: true,
+            createImageThumbnails: true,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            parallelUploads: 10,
+            accept: function (file, done) {
+                if (file.name == "justinbieber.jpg") {
+                    done("Naha, you don't.");
+                }
+                else { done(); }
+            },
+            init: function () {
+                var submitButton = document.querySelector("#btn-adicionar-arquivos")
+                myDropzone = this; // closure
+
+                submitButton.addEventListener("click", function () {
+                    myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+                });
+
+                // You might want to show the submit button only when
+                // files are dropped here:
+                this.on("addedfile", function () {
+                    $("#btn-adicionar-arquivos").removeClass('disabled');
+                });
+            },
+            success: function () {
+                $('#form-arquivos-anexos').submit();
+            }
+        };
+    });
+</script>

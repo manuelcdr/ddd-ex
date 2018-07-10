@@ -1,0 +1,71 @@
+﻿@model PGLaw.Application.Juridico.Models.ProcessoVM
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8">
+        <h1 class="text-light"><i class="md md-description md-2x text-accent-dark"></i><strong class="text-accent-dark">@Model.Cliente.Pessoa.Nome</strong></h1>
+    </div>
+    <div class="col-xs-12 col-sm-4 text-right">
+        <h2 class="text-light text-default-light">
+            @*@if (!string.IsNullOrEmpty(Model.Status.Status))
+                {
+                    switch (Model.Status.Status)
+                    {
+                        case "Ativo":
+                            <span class="text-success">@Model.Status.Status</span>
+                            break;
+                        case "Encerrado":
+                            <span class="text-danger">@Model.Status.Status</span>
+                            break;
+                        default:
+                            <small>@Model.Status.Status</small>
+                            break;
+                    }
+                } | @Model.Status.Descricao*@
+
+            <span class="text-success">Ativo</span>
+
+        </h2>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-xs-6 col-sm-5">
+        <h4 class="text-light">Pessoas Envolvidas</h4>
+        @foreach (var pessoa in Model.ProcessoPessoa)
+        {
+            <div><strong> @pessoa.TipoRelacao : </strong> @pessoa.Nome </div>
+        }
+    </div><!--end .col -->
+    <div class="col-sm-2">
+    </div><!--end .col -->
+    <div class="col-xs-6 col-sm-5">
+        <div class="well">
+            <div class="clearfix">
+                <div class="pull-left"> ID do Processo: </div>
+                <div class="pull-right"> @Model.Id </div>
+            </div>
+            @if (Model.NumeroInstancia == 1)
+            {
+                <div class="clearfix">
+                    <div class="pull-left"> Nº 1ª Instancia : </div>
+                    <div class="pull-right"> @Model.NumeroPrimeiraInstancia </div>
+                </div>
+            }
+            else if (Model.NumeroInstancia == 2)
+            {
+                <div class="clearfix">
+                    <div class="pull-left"> Nº 2ª Instancia : </div>
+                    <div class="pull-right"> @Model.NumeroSegundaInstancia </div>
+                </div>
+            }
+            else if (Model.NumeroInstancia == 3)
+            {
+                <div class="clearfix">
+                    <div class="pull-left"> Nº 3ª Instancia : </div>
+                    <div class="pull-right"> @Model.NumeroTerceiraInstancia</div>
+                </div>
+            }
+        </div>
+    </div><!--end .col -->
+</div>
+

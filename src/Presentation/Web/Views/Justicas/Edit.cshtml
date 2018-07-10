@@ -1,0 +1,52 @@
+﻿@model PGLaw.Application.Juridico.Models.Processos.JusticaVM
+
+@{
+    ViewBag.Title = Model.Descricao;
+    ViewBag.SubTitle = Model.DescricaoReduzida;
+}
+
+<form asp-action="Edit" method="post" class="form" role="form">
+    <div class="card card-underline">
+        <div class="card-head card-head-sm style-primary">
+            <header>@ViewBag.Title</header>
+            @*<div class="tools">
+                    <a asp-action="Remover" asp-route-id="@Model?.Id" class="btn btn-icon-toggle btn-close"><i class="md md-delete"></i></a>
+                </div>*@
+        </div>
+        <div class="card-body">
+            @Html.Partial("_Model", Model)
+        </div>
+        <div class="card-actionbar">
+            <div class="card-actionbar-row">
+                <button type="reset" class="btn btn-flat">Cancel</button>
+                <button type="submit" class="btn btn-flat btn-primary">Atualizar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<br />
+<br />
+
+<div class="fixed-action-btn">
+    <a class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-righ" data-toggle="tooltip" data-placement="left" title="" data-original-title="Novo Cliente"><i class="md md-add"></i></a>
+    <ul>
+        <li><a asp-action="Create" asp-controller="Orgaos" asp-route-justica="@Model.Id" class="btn-floating-action btn-floating btn-primary-light" data-toggle="tooltip" data-placement="left" title="" data-original-title="Orgão"><strong>O</strong></a></li>
+    </ul>
+</div>
+
+@section scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/core/source/AppFormListaPesquisavel.js"></script>
+    <script src="~/js/custom-materialize.js"></script>
+
+    <script>
+
+        // Or with jQuery
+        $(document).ready(function () {
+            $('.fixed-action-btn').floatingActionButton();
+        });
+
+
+    </script>
+}

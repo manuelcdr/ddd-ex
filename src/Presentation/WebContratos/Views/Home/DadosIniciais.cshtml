@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Iniciar PG Law";
+    ViewBag.SubTitle = "v 2.0";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+
+    <!-- BEGIN META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="your,keywords">
+    <meta name="description" content="Short explanation about this website">
+
+    <!-- BEGIN STYLESHEETS -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700,800' rel='stylesheet' type='text/css' />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/_bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/__materialadmin.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/toastr/toastr.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/font-awesome.min.css" /> <!--Font Awesome Icon Font-->
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/material-design-iconic-font.min.css" /> <!--Material Design Iconic Font-->
+
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/multi-select/multi-select.css">
+
+    <link type="text/css" rel="stylesheet" href="~/css/Site.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/custom-materialize.css" />
+    <!-- Additional CSS includes -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/assets/js/libs/utils/html5shiv.js"></script>
+    <script type="text/javascript" src="/assets/js/libs/utils/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="menubar-hoverable header-fixed ">
+    <!-- BEGIN LOGIN SECTION -->
+    <section class="section-account">
+        <div class="spacer"></div>
+        <br />
+        <div class="card contain-xs card-underline">
+            <div class="card-body">
+                <div class="contain-lg">
+                    <form asp-action="GerarDadosIniciais"
+                          data-ajax-begin="onBegin" data-ajax-complete="onComplete"
+                          data-ajax-failure="onFailed" data-ajax-success="onSuccess"
+                          data-ajax="true" data-ajax-method="POST">
+                        <button type="submit" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading..." class="btn ink-reaction btn-raised btn-primary btn-loading-state">Gerar Dados Iniciais</button>
+                        <div id="result" class="row hidden">
+                            <a asp-action="" asp-controller="Home">Ir para Home</a>
+                        </div>
+                    </form>
+                </div><!--end .col -->
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+
+    <!-- BEGIN JAVASCRIPT -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @*<script src="~/lib/jquery/jquery-migrate-1.2.1.min.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/nanoscroller/jquery.nanoscroller.min.js"></script>
+    <script src="~/lib/toastr/toastr.js"></script>
+
+    <!-- Put App.js last in your javascript imports -->
+    <script src="~/js/core/source/App.js"></script>
+    <script src="~/js/core/source/AppNavigation.js"></script>
+
+    
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <div id="device-breakpoints"><div class="device-xs visible-xs" data-breakpoint="xs"></div><div class="device-sm visible-sm" data-breakpoint="sm"></div><div class="device-md visible-md" data-breakpoint="md"></div><div class="device-lg visible-lg" data-breakpoint="lg"></div></div>
+
+
+    <script>
+        var onBegin = function () {
+        };
+
+        var onComplete = function () {
+        };
+
+        var onSuccess = function (context) {
+            $('#result').removeClass('hidden');
+            toastr.success("Dados iniciais gerados com sucesso!")
+        };
+
+        var onFailed = function (context) {
+            toastr.success("Ops! Ocorreu alguma falha ao gerar os dados iniciais.");
+        };
+    </script>
+
+</body>
+</html>

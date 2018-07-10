@@ -1,0 +1,45 @@
+﻿@model PGLaw.Application.Juridico.Models.ProcessoVM
+
+<div class="col-xs-12">
+    <div class="card no-margin">
+        <div class="card-body style-gray text-sm">
+            <div class="table-responsive">
+                <table class="table table-hover no-margin">
+                    <thead class="text-primary-bright">
+                        <tr>
+                            <th class="text-left">Pedidos</th>
+                            <th style="width:140px" class="text-center">Valor</th>
+                            <th style="width:140px" class="text-center">Provisão</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color: white;">
+                        @foreach (var pedido in Model.Pedidos)
+                        {
+                            <tr>
+                                <td class="">@pedido.Tipo</td>
+                                <td class="text-right">@pedido.ValorPedido.ToString("###,###,###.##")</td>
+                                <td class="text-right">@pedido.ValorProvisao.ToString("###,###,###.##")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <div class="col-xs-6 col-sm-2 text-lg col-md-offset-2 text-right">
+                    <strong>Moeda: </strong>Real
+                </div>
+                <div class="col-xs-6 col-sm-2 text-lg text-primary-light text-right">
+                    <strong class="">Causa: </strong>@Model.ValorCausa.GetValueOrDefault(0).ToString("###,###,##0.00")
+                </div>
+                <div class="col-xs-6 col-sm-2 text-lg text-primary-light text-right">
+                    <strong class="">Provisão: </strong>@Model.ValorProvisao.GetValueOrDefault(0).ToString("###,###,##0.00")
+                </div>
+                <div class="col-xs-6 col-sm-2 text-lg text-primary-light text-right">
+                    @*<strong class="">Corrigido: </strong>@Model.ValorCorrigido.GetValueOrDefault(0).ToString("###,###,##0.00")*@
+                </div>
+                <div class="col-xs-6 col-sm-2 text-lg text-primary-light text-right">
+                    @*<strong class="">Resultado: </strong>@Model.ValorResultado.GetValueOrDefault(0).ToString("###,###,##0.00")*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--end .col -->

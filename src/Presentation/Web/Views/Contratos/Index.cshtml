@@ -1,0 +1,756 @@
+﻿@model IEnumerable<PGLaw.Application.Contratos.Models.Contratos.ContratoVM>
+
+@section styles{
+    <link href="~/lib/jquery-fileupload/css/jquery.fileupload.css" rel="stylesheet" />
+}
+
+
+<div id="partial-lista-contratos">
+    @Html.Partial("_ListaContratos", Model)
+</div>
+
+
+
+
+<div class="modal fade" id="formModalEdit" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formModalLabel">Contrato</h4>
+            </div>
+            <div id="partial-edit">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END FORM MODAL MARKUP -->
+@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal" >popup teste</button>
+    <!-- BEGIN FORM MODAL MARKUP -->
+    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="formModalLabel">Contrato</h4>
+                </div>
+                <form class="form-horizontal" role="form">
+                    <div class="modal-body">
+                        <div>
+                            <ul class="nav nav-tabs" data-toggle="tabs">
+                                <li class="active"><a href="#Basico">Dados Básicos</a></li>
+                                <li><a href="#Servicos">Serviços Previstos e Forma de Pagamento</a></li>
+                                <li><a href="#Despesas">Tipo de Despesas Reembolsáveis</a></li>
+                                <li><a href="#Arquivos">Arquivos</a></li>
+                            </ul>
+
+                            <div class="tab-content card-body">
+                                <div class="tab-pane active" id="Basico">
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="select1" class="control-label">Tipo</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select id="select1" name="select1" class="form-control">
+                                                <option value="">&nbsp;</option>
+                                                <option value="1">Contrato</option>
+                                                <option value="2">Proposta Comercial</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="RazaoSocial" class="control-label">Razão Social</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="RazaoSocial" id="RazaoSocial" class="form-control">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="inlineRadioOptionsAtivo" class="control-label">Ativo</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="radio-inline radio-styled">
+                                                <input type="radio" name="inlineRadioOptionsAtivo" value="1"><span>Sim</span>
+                                            </label>
+                                            <label class="radio-inline radio-styled radio-danger">
+                                                <input type="radio" name="inlineRadioOptionsAtivo" value="0"><span>Não</span>
+                                            </label>
+                                        </div><!--end .col -->
+                                    </div><!--end .form-group -->
+
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="Gerencia" class="control-label">Gerência</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select id="Gerencia" name="Gerencia" class="form-control">
+                                                <option value="">&nbsp;</option>
+                                                <option value="1">Financeiro</option>
+                                                <option value="2">Produtos</option>
+                                                <option value="3">RH</option>
+                                                <option value="4">Serviços</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="Assinatura" class="control-label">Assinatura do Contrato</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="input-group date" id="demo-date">
+                                                <div class="input-group-content">
+                                                    <input type="text" id="Assinatura" name="Assinatura" class="form-control datepicker">
+                                                </div>
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="Vigencia" class="control-label">Vigência</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select id="Vigencia" name="Vigencia" class="form-control">
+                                                <option value="">&nbsp;</option>
+                                                <option value="1">12 meses</option>
+                                                <option value="2">24 meses</option>
+                                                <option value="3">36 meses</option>
+                                                <option value="4">48 meses</option>
+                                                <option value="4">Indeterminado</option>
+                                                <option value="4">Outros</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="Objeto" class="control-label">Objeto do Contrato</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <textarea name="Objeto" id="Objeto" class="form-control" rows="3" placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="indice" class="control-label">Índice de Reajuste</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select id="indice" name="indice" class="form-control">
+                                                <option value="">&nbsp;</option>
+                                                <option value="1">IGP-M</option>
+                                                <option value="2">IPC-A</option>
+                                                <option value="3">INPC</option>
+                                                <option value="4">Salário Mínimo</option>
+                                                <option value="5">Não Previsto</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="inlineRadioOptionsJuros" class="control-label">Cláusula de Juros e Multa</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="radio-inline radio-styled">
+                                                <input type="radio" name="inlineRadioOptionsJuros" value="1"><span>Sim</span>
+                                            </label>
+                                            <label class="radio-inline radio-styled radio-danger">
+                                                <input type="radio" name="inlineRadioOptionsJuros" value="0"><span>Não</span>
+                                            </label>
+                                        </div><!--end .col -->
+                                    </div><!--end .form-group -->
+
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="DescJuros" class="control-label">% Juros e Multa</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="DescJuros" id="DescJuros" class="form-control">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="Servicos">
+                                    <table class="table no-margin table-hover" style="font-size:13px">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Valor</th>
+                                                <th>Forma de Pagamento</th>
+                                                <th style="text-align:Center">Opção</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Distribuição</td>
+                                                <td>373.530,00</td>
+                                                <td>10 Parcelas</td>
+
+                                                <td class="text-right">
+                                                    <nobr>
+                                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                                    </nobr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Locação</td>
+                                                <td>679.150,00</td>
+                                                <td>Parcelas mensais</td>
+
+                                                <td class="text-right">
+                                                    <nobr>
+                                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                                    </nobr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Prestação de Serviço</td>
+                                                <td>124.700,00</td>
+                                                <td>12 parcelas</td>
+
+                                                <td class="text-right">
+                                                    <nobr>
+                                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                                    </nobr>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="Despesas">
+                                    <div class="form-group">
+                                        <div class="col-sm-12 text-justify">
+                                            <label class="checkbox-inline checkbox-styled">
+                                                <input type="checkbox" value="option1"><span>Cartório</span>
+                                            </label>
+                                            <label class="checkbox-inline checkbox-styled">
+                                                <input type="checkbox" value="option2"><span>Digitalização</span>
+                                            </label>
+                                            <label class="checkbox-inline checkbox-styled">
+                                                <input type="checkbox" value="option3"><span>Locomoção</span>
+                                            </label>
+                                            <label class="checkbox-inline checkbox-styled">
+                                                <input type="checkbox" value="option4"><span>Correios</span>
+                                            </label>
+                                            <label class="checkbox-inline checkbox-styled">
+                                                <input type="checkbox" value="option5"><span>Telefonia</span>
+                                            </label>
+                                            <label class="checkbox-inline checkbox-styled">
+                                                <input type="checkbox" value="option6"><span>Emolumentos</span>
+                                            </label>
+                                        </div><!--end .col -->
+                                    </div><!--end .form-group -->
+                                </div>
+                                <div class="tab-pane" id="Arquivos">
+                                    <div class="form-group">
+                                        <div class="col-sm-8 paddin" style="padding:50px">
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">Upload Arquivo</button>
+                                                </div>
+                                                <div class="input-group-content">
+                                                    <input type="text" class="form-control" id="groupbutton17">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 paddin" style="padding:30px">
+                                            <table class="table" style="font-size:13px">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Arquivos</th>
+                                                        <th style="text-align:Center"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>CONTRATO.pdf</td>
+                                                        <td class="text-right">
+                                                            <nobr>
+                                                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                                            </nobr>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ANEXO.pdf</td>
+                                                        <td class="text-right">
+                                                            <nobr>
+                                                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                                            </nobr>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div><!--end .form-group -->
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- END FORM MODAL MARKUP -->
+    <!-- BEGIN FORM MODAL MARKUP -->*@
+
+
+
+
+
+@section scripts {
+
+    <script src="~/js/core/source/AppVendor.js"></script>
+
+    <script src="~/lib/jquery-fileupload/js/jquery.fileupload.js"></script>
+
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+
+
+    <script type="text/javascript">
+
+        //$(document).ready(function () {
+        //    var fileCatcher = document.getElementById('file-catcher');
+        //    var fileInput = document.getElementById('file-input');
+        //    var fileListDisplay = document.getElementById('file-list-display');
+
+        //    var fileList = [];
+        //    var renderFileList, sendFile;
+
+        //    fileCatcher.addEventListener('submit', function (evnt) {
+        //        evnt.preventDefault();
+        //        fileList.forEach(function (file) {
+        //            sendFile(file);
+        //        });
+        //    });
+
+        //    fileInput.addEventListener('change', function (evnt) {
+        //        fileList = [];
+        //        alert(fileInput.files.length);
+        //        for (var i = 0; i < fileInput.files.length; i++) {
+        //            fileList.push(fileInput.files[i]);
+        //        }
+        //        renderFileList();
+        //    });
+
+        //    renderFileList = function () {
+        //        fileListDisplay.innerHTML = '';
+        //        fileList.forEach(function (file, index) {
+        //            var fileDisplayEl = document.createElement('p');
+        //            fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name;
+        //            fileListDisplay.appendChild(fileDisplayEl);
+        //        });
+        //    };
+
+        //    sendFile = function (file) {
+        //        var formData = new FormData();
+        //        var request = new XMLHttpRequest();
+
+        //        formData.set('file', file);
+        //        request.open("POST", '/Contratos/Upload');
+        //        request.send(formData);
+        //    };
+        //})();
+
+
+
+        $(document).ready(function () {
+            $('#fileupload').fileupload({
+                dataType: 'json',
+                url: '/Contratos/Upload',
+                autoUpload: true,
+                done: function (e, data) {
+                    $('.file_name').html(data.result.name);
+                    $('.file_type').html(data.result.type);
+                    $('.file_size').html(data.result.size);
+                }
+            }).on('fileuploadprogressall', function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('.progress .progress-bar').css('width', progress + '%');
+            });
+        });
+    </script>
+
+    <script>
+
+        $('input[type="file"]').on('change', function () {
+            alert('teste');
+            $(this).append('<input type="file" name="file[]"/>')
+        });
+
+        $(function () {
+
+
+            $(":input").inputmask();
+            //$('select').select2();
+
+            $(document).ajaxComplete(function (event, xhr, settings) {
+                //alert('teste');
+                //$("#AddTipoServico").on("change", function () {
+                //    alert('teste');
+                //    $("#debug").text($("#AddTipoServico").val());
+                //}).trigger("change");
+
+            });
+
+        });
+
+        //$(function () {
+        //    $("#Editar").click(function () {
+        //        alert('teste');
+        //    });
+        //});
+
+        function EditContrato(s) {
+            var card = $('#card-contratos');
+            materialadmin.AppCard.addCardLoader(card);
+
+            $.ajax({
+                url: $(s).prop("formAction"),
+                async: false,
+                success: function (context) {
+                    $('#partial-edit').html(context);
+
+                    //$(":input").inputmask();
+                    //$(":select").select();
+                },
+                error: function (jq, status, error) {
+                    toastr.error("Ops! Ocorreu alguma falha.");
+                }
+            });
+
+            materialadmin.AppCard.removeCardLoader(card);
+        }
+
+        function SalvarContrato(s) {
+            var card = $('#formModalEdit');
+            materialadmin.AppCard.addCardLoader(card);
+            AjustarTabelas();
+
+            var items = ($("#formEdit").serializeArray());
+            var form = new FormData();
+            for (i = 0; i < items.length; i++) {
+                form.append(items[i].name.toLocaleLowerCase(), items[i].value);
+                //console.log(items[i].name.toLocaleLowerCase() + ':' + items[i].value);
+            }
+
+            var names = [];
+
+            $('#tbArquivo > tbody  > tr').each(function () {
+                if ($(this).find("td").eq(2).text() != '') {
+                    var NomeFileInput = $(this).find("td").eq(2).text().trim();
+                    names.push(document.getElementById(NomeFileInput).files[0].name);
+                    form.append('Arquivo', document.getElementById(NomeFileInput).files[0]);
+
+                }
+
+            });
+
+            //for (var i = 1; i < id; ++i) {
+            //    names.push(document.getElementById("myFileSelector-" + i).files[0].name);
+            //    form.append('Arquivo', document.getElementById("myFileSelector-" + i).files[0]);
+            //}
+
+            //var elem = document.getElementById("myFileSelector");
+            //for (var i = 0; i < elem.files.length; ++i) {
+            //    names.push(elem.files[i].name);
+
+            //    form.append('Arquivo', elem.files[i]);
+            //}
+
+            console.log(names);
+
+            setTimeout(function () {
+                $.ajax({
+                    url: $(s).prop("formAction"),
+                    type: 'post',
+                    data: form,
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    success: function (context) {
+                        $('#partial-lista-contratos').html(context);
+
+                        //$(":input").inputmask();
+                        //$(":select").select();
+
+                        $('#formModalEdit').modal("hide");
+                    },
+                    error: function (jq, status, error) {
+                        console.log(jq);
+                        toastr.error("Ops! Ocorreu alguma falha.");
+                    }
+                });
+
+                materialadmin.AppCard.removeCardLoader(card);
+
+
+
+            }, 150);
+        }
+
+        function RefreshListaContratos(s) {
+            var card = $('#partial-lista-contratos');
+            materialadmin.AppCard.addCardLoader(card);
+
+            //setTimeout para exibir a imagem de load
+            setTimeout(function () {
+                $.ajax({
+                    url: $(s).prop("formAction"),
+                    async: false,
+                    success: function (context) {
+                        $('#partial-lista-contratos').html(context);
+                    },
+                    error: function (jq, status, error) {
+                        toastr.error("Ops! Ocorreu alguma falha.");
+                    }
+                });
+                materialadmin.AppCard.removeCardLoader(card);
+            }, 150);
+        }
+
+        function myFunctionFilterContrato(StatusFilter) {
+            // Declare variables
+            var table, tr, td, i;
+            StatusFilter = StatusFilter.toUpperCase();
+            table = document.getElementById("tableContratos");
+            tr = table.getElementsByTagName("tr");
+            // Loop through all table rows, and hide those who don't match the search query
+            if (StatusFilter != 'TODOS') {
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[6];
+                    if (td) {
+
+                        if (td.innerHTML.toUpperCase().indexOf(StatusFilter) > -1) {
+                            tr[i].style.display = "";
+                        }
+                        else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+            else {
+                for (i = 0; i < tr.length; i++) {
+
+                    tr[i].style.display = "";
+
+
+                }
+
+            }
+        }
+
+
+        function adicionarServicoClick(s) {
+
+            // redefinir validação para adicionar pedido
+            //ignorar('.tab-pane.active :input, .tab-pane.active select');
+            //considerar('#form-add-pessoa :input, #form-add-pessoa select');
+            //var valido = validarFormulario();
+
+            //if (valido) {
+
+            var ValTipoServico = $("#AddTipoServico option:selected").val();
+            var TextTipoServico = $("#AddTipoServico option:selected").text();
+            var ValorServico = $("#AddValorServico").val();
+
+            var ValFormaPagamento = $("#AddFormaPagamento option:selected").val();
+            var TextFormaPagamento = $("#AddFormaPagamento option:selected").text();
+
+            var Observacao = "";
+
+            adicionarServico(ValTipoServico, TextTipoServico, ValorServico, ValFormaPagamento, TextFormaPagamento, Observacao);
+
+            resetarCamposAddServico();
+            //}
+
+            //considerar('.tab-pane.active :input, .tab-pane.active select');
+            //ignorar('#form-add-pessoa :input, #form-add-pessoa select');
+        }
+
+        function adicionarServico(ValTipoServico, TextTipoServico, ValorServico, ValFormaPagamento, TextFormaPagamento, Observacao) {
+
+            var newRow = `<tr >
+                                                                                                                                <td>
+                                                                                                                                    <input type='hidden' name='ServicoContratos.TipoServicoId' value='${ValTipoServico}'/>
+                                                                                                                                    ${TextTipoServico}
+                                                                                                                                </td>
+                                                                                                                                <td>
+                                                                                                                                    <input type='hidden' name='ServicoContratos.Valor' value='${ValorServico}'/>
+                                                                                                                                    ${ValorServico}
+                                                                                                                                </td>
+                                                                                                                                <td>
+                                                                                                                                    <input type='hidden' name='ServicoContratos.FormaPagamentoId' value='${ValFormaPagamento}'/>
+                                                                                                                                    ${TextFormaPagamento}
+                                                                                                                                </td>
+                                                                                                                                <td>
+                                                                                                                                    <input type='hidden' name='ServicoContratos.Observacao' value='${Observacao}'/>
+                                                                                                                                    ${Observacao}
+                                                                                                                                </td>
+                                                                                                                                <td class="text-center">
+                                                                                                                                    <button type='button' class="btn btn-icon-toggle" onclick="removerServico(this)">
+                                                                                                                                        <i class="fa fa-trash-o"></i>
+                                                                                                                                    </button>
+                                                                                                                                </td>
+                                                                                                                        </tr>`;
+
+            $('#tbServicos').show();
+            $(newRow).appendTo("#tbServicos tbody");
+
+        }
+
+        function removerServico(handler) {
+            var listRow = $(handler).closest('li,tr');
+            listRow.remove();
+        }
+
+        function resetarCamposAddServico() {
+            resetarCamposFilhos('#accordion7-4');
+        }
+
+        function resetarCamposFilhos(seletorPai) {
+            $(seletorPai).find(':input[type=text]').val('').trigger('change');
+            //$(seletorPai).find(':input[type=radio]:checked').removeAttr('checked').trigger('change');
+            //$(seletorPai).find(':input[type=checkbox]:checked').removeAttr('checked').trigger('change');
+            $(seletorPai).find('select').val('').trigger('change');
+        }
+
+
+
+
+        function adicionarArquivoClick(s) {
+
+            // redefinir validação para adicionar pedido
+            //ignorar('.tab-pane.active :input, .tab-pane.active select');
+            //considerar('#form-add-pessoa :input, #form-add-pessoa select');
+            //var valido = validarFormulario();
+
+            //if (valido) {
+
+            var NomeArquivo = $("#upload-file-info").val();
+
+            adicionarArquivo(NomeArquivo, s);
+
+            //resetarCamposAddArquivo();
+            //}
+
+            //considerar('.tab-pane.active :input, .tab-pane.active select');
+            //ignorar('#form-add-pessoa :input, #form-add-pessoa select');
+        }
+
+        function adicionarArquivo(NomeArquivo, s) {
+            var newRow = `<tr >
+                                <td>
+                                    <input type='hidden' name='DocumentoContratos.NomeArquivo' value=''/>
+                                    <input type='hidden' name='DocumentoContratos.NomeOriginal' value='${NomeArquivo}'/>
+                                    ${NomeArquivo}
+                                </td>
+                                <td class="text-center">
+                                    <button type='button' class="btn btn-icon-toggle" onclick="removerArquivo(this)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </td>
+                                <td style="display:none">
+                                    ${s.id}
+                                </td>
+
+                        </tr>`;
+
+            $('#tbArquivo').show();
+
+            $(newRow).appendTo("#tbArquivo tbody");
+
+        }
+
+        function removerArquivo(handler) {
+            var listRow = $(handler).closest('li,tr');
+            //alert(listRow.find("td").eq(2).html());
+            //$(listRow.find("td").eq(2).html()).remove();
+
+            listRow.remove();
+        }
+
+        function resetarCamposAddArquivo() {
+            $('#upload-file-info').val('').trigger('change');
+        }
+
+        function AjustarTabelas() {
+
+
+            //alert('teste');
+            alterarNameParaArray('ServicoContratos.TipoServicoId');
+            alterarNameParaArray('ServicoContratos.Valor');
+            alterarNameParaArray('ServicoContratos.FormaPagamentoId');
+            alterarNameParaArray('ServicoContratos.Observacao');
+
+            alterarNameParaArray('DocumentoContratos.NomeArquivo');
+            alterarNameParaArray('DocumentoContratos.NomeOriginal');
+        }
+
+        var id = 1;
+
+        function addArquivos(s) {
+
+            $('#upload-file-info').val(s.files[0].name)
+
+            var showId = ++id;
+            if (showId <= 5) {
+                $(".input-files").prop("for", "myFileSelector-" + showId);
+                $(".input-files").append('<input type="file" id="myFileSelector-' + showId + '" name="myFileSelector-' + showId + '" multiple style="display:none" onchange="addArquivos(this);">');
+            }
+
+            adicionarArquivoClick(s);
+
+            //$('#formEdit').append('file', $('#myFileSelector')[0].files[0]);
+        }
+
+        function alterarNameParaArray(name) {
+            var ContratoItem = $(`[name="${name}"]`);
+
+            ContratoItem.each(function (index, element) {
+                let $pessoaTipo = $(this);
+
+                var primeiraParte = name.split('.')[0];
+                var segundaParte = name.split('.')[1];
+
+                $pessoaTipo.attr("name", `${primeiraParte}[${index}].${segundaParte}`);
+            });
+        }
+
+
+        function ArquivosOnBegin() {
+            var card = $('#Arquivos');
+            materialadmin.AppCard.addCardLoader(card);
+
+        }
+
+        function ArquivosOnComplete() {
+            var card = $('#Arquivos');
+            materialadmin.AppCard.removeCardLoader(card);
+            materialadmin.AppFormListaPesquisavel.AtualizarListagens();
+        }
+
+
+
+
+    </script>
+}

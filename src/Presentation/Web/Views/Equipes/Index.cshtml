@@ -1,0 +1,103 @@
+﻿
+
+@model IEnumerable<PGLaw.Application.Juridico.Models.Pessoas.EquipeVM>
+
+<div id="card-lista-Equipes" class="card">
+    <div class="card-body style-primary form-inverse">
+        <form asp-action="BuscarEquipes" id="form-pesquisa" class="form-horizontal no-y-padding focus" role="form"
+              data-ajax-begin="onBegin" data-ajax-complete="onComplete"
+              data-ajax-failure="onFailed" data-ajax-success="onSuccess"
+              data-ajax="true" data-ajax-method="GET">
+            <div class="row">
+                <div id="form-group-pesquisa" class="form-group floating-label no-margin">
+                    <div class="input-group">
+                        <div class="input-group-content">
+                            <input type="text" id="Pesquisa" name="Pesquisa" class="form-control" />
+                        </div>
+                        <div class="input-group-btn">
+                            <button id="btn-buscar" class="btn btn-floating-action btn-primary-dark" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="partial-container" class="card-body no-padding">
+        <div class="small-padding style-primary-dark">
+            <p class="text-light text-right no-margin">A busca retornou <strong>@(Model?.Count() ?? 0)</strong> resultados</p>
+        </div>
+
+        @if (Model.Any())
+        {
+            <table id="table1" class="table table-condensed table-striped order-column hover">
+                <thead>
+                    <tr>
+                        <th class="sort-alpha">Equipe</th>
+                        <th class="sort-alpha">Ativo</th>
+
+                    </tr>
+                </thead>
+                <tbody class="">
+                    @foreach (var item in Model)
+                    {
+                    <tr class="text-sm">
+                        <td>@item.Nome</td>
+                        <td>@item.Ativo</td>
+                        <td>
+                            <a class="btn btn-flat ink-reaction btn-default" href="@Url.Action("Detalhes", new { id = item.Id })">
+                                <i class="md md-description"></i>
+                            </a>
+                        </td>
+                        <td class="text-right">
+                            <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <script>
+                $(function () {
+                    $('#table1').DataTable();
+                })
+            </script>
+        }
+        else
+        {
+            <script>
+                $(function () {
+                    toastr.warning("Sua busca não retornou resultados");
+                })
+            </script>
+        }
+
+        <div class="fixed-action-btn">
+            <a href="@Url.Action("Create")" class="btn ink-reaction btn-floating-action btn-lg btn-primary stick-bottom-right"><i class="md md-add"></i></a>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        var onBegin = function () {
+            var card = $('#card-lista-Equipes');
+            materialadmin.AppCard.addCardLoader(card);
+        };
+
+        var onComplete = function () {
+            var card = $('#card-lista-Equipes');
+            materialadmin.AppCard.removeCardLoader(card);
+        };
+
+        var onSuccess = function (context) {
+            $('#partial-container').html(context);
+        };
+
+        var onFailed = function (context) {
+            toastr.error("Ops! Ocorreu alguma falha.");
+        };
+    </script>
+}

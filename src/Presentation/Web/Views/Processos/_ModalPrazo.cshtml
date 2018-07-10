@@ -1,0 +1,65 @@
+﻿@*@model PgLaw.Apresentacao.Web.App.Models.Processo.PrazoVM*@
+
+<!-- BEGIN FORM MODAL MARKUP -->
+<div class="modal fade" id="modalPrazo" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formModalLabel">Criar Prazo</h4>
+            </div>
+            @*@using (Ajax.BeginForm("Criar", "Prazo", null, new AjaxOptions { HttpMethod = "Post", OnSuccess = "successAjax", OnFailure = "errorAjax" }, new { @class = "form-horizontal form-validate" }))
+            {*@
+                @*@Html.HiddenFor(model => model.ProcessoId)*@
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="DataPrazo" class="control-label">Data do Prazo</label>
+                        </div>
+                        <div class="col-sm-5">
+                            @*@Html.TextBoxFor(model => model.DataPrazoDate, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                            @Html.ValidationMessageFor(model => model.DataPrazoDate)*@
+                        </div>
+                        <div class="col-sm-4">
+                            @*@Html.TextBoxFor(model => model.DataPrazoTime, "{0:hh}:{0:mm}", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DataPrazoTime)*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="TipoId" class="control-label">Tipo de Andamento</label>
+                        </div>
+                        <div class="col-sm-9">
+                            @*@Html.DropDownListFor(model => model.TipoId, (SelectList)ViewBag.SelectListItemTiposPrazos, new { id = "tipo-prazo", @class = "src-atualizador form-control select2" })
+                            @Html.ValidationMessageFor(model => model.TipoId)
+                            @Html.HiddenFor(model => model.Tipo, new { id = "tipo-prazo-texto", @class = "dest-atualizador" })*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="Des" class="control-label">Descricão</label>
+                        </div>
+                        <div class="col-sm-9">
+                            @*@Html.TextAreaFor(model => model.Descricao, new { @class = "form-control autosize", rows = "1", })
+                            @Html.ValidationMessageFor(model => model.Descricao)*@
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel-modal" type="button" class="btn btn-default cancel-modal" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </div>
+            @*}*@
+        </div><!-- /.modal-content -->
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+<script>
+    $(function () {
+        $('#tipo-prazo').change(function () {
+            guardarTexto($(this), $('#tipo-prazo-texto'));
+        });
+    })
+</script>

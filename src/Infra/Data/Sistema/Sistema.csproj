@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>PGLaw.Infra.Data.Sistema</AssemblyName>
+    <RootNamespace>PGLaw.Infra.Data.Sistema</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+   <TargetFramework>netcoreapp2.0</TargetFramework>
+   <RuntimeFrameworkVersion>2.0.5</RuntimeFrameworkVersion>
+   <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="EntityConfigs\EntityConfigBase.cs" />
+    <Compile Remove="Migrations\20180308211600_Initial.cs" />
+    <Compile Remove="Migrations\20180308211600_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20180313192520_Atualização de Usuario e Nivel de Acesso.cs" />
+    <Compile Remove="Migrations\20180313192520_Atualização de Usuario e Nivel de Acesso.Designer.cs" />
+    <Compile Remove="Migrations\20180329142036_AdicionaValidacoes2.cs" />
+    <Compile Remove="Migrations\20180503211913_verificandoAtualizacoes.cs" />
+    <Compile Remove="Repositories\Base\Repository.cs" />
+    <Compile Remove="Repositories\MenuRepository.cs" />
+    <Compile Remove="Repositories\NivelDeAcessoRepository.cs" />
+    <Compile Remove="Repositories\UsuarioRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Sistema.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain\Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\Domain\Sistema\Sistema.csproj" />
+    <ProjectReference Include="..\Base\Base.csproj" />
+  </ItemGroup>
+
+  
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\Base\" />
+  </ItemGroup>
+
+</Project>

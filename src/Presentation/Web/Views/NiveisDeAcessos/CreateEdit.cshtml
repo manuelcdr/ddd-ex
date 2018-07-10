@@ -1,0 +1,77 @@
+﻿@model PGLaw.Application.Sistema.Models.NivelDeAcessoVM
+
+@{
+    ViewBag.Title = Model?.Nome ?? "Novo Nivel de Acesso";
+    ViewBag.SubTitle = "Nivel de Acesso";
+    bool novo = ViewBag.Novo ?? false;
+}
+
+@section styles{
+    <link type="text/css" rel="stylesheet" href="~/assets/css/theme-default/libs/multi-select/multi-select.css">
+}
+
+
+<form asp-action="@(novo ? "Create" : "Edit")" method="post" class="form">
+    <div class="card card-underline">
+        <div class="card-head card-head-sm style-primary">
+            <header>@ViewBag.Title</header>
+        </div>
+        <div class="card-body">
+            @Html.Partial("_NivelDeAcesso", Model)
+        </div>
+        <div class="card-actionbar">
+            <div class="card-actionbar-row">
+                <button type="reset" class="btn btn-flat">Cancelar</button>
+                <button type="submit" class="btn btn-flat btn-primary">@(novo ? "Salvar" : "Atualizar")</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @*<script src="~/assets/js/libs/autosize/jquery.autosize.min.js"></script>*@
+    <script src="~/assets/js/libs/multi-select/jquery.multi-select.js"></script>
+    <script src="~/assets/js/libs/quicksearch/quick-search.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.searchable').multiSelect({
+                selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Pesquisar...'>",
+                selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Pesquisar...'>",
+                afterInit: function (ms) {
+                    var that = this,
+                        $selectableSearch = that.$selectableUl.prev(),
+                        $selectionSearch = that.$selectionUl.prev(),
+                        selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                        selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which === 40) {
+                                that.$selectableUl.focus();
+                                return false;
+                            }
+                        });
+
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which == 40) {
+                                that.$selectionUl.focus();
+                                return false;
+                            }
+                        });
+                },
+                afterSelect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                },
+                afterDeselect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                }
+            });
+        });
+    </script>
+}

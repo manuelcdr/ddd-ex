@@ -1,0 +1,86 @@
+﻿@model PGLaw.Application.Sistema.Models.EditarUsuarioVM
+
+@using PGLaw.Infra.Cross.Common.Enums
+
+<!-- BEGIN VALIDATION FORM WIZARD -->
+
+<form method="post" class="form" role="form">
+    <div class="card">
+        <div class="card-head style-primary">
+            <header>@Model.Nome <small>@Model.Email</small></header>
+        </div>
+        <div class="card-body">
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Email" />
+
+            <div class="form-inline">
+                <div class="row">
+                    <label class="radio-inline radio-styled radio-success"><input type="radio" asp-for="Ativo" value="@true" />Ativo</label>
+                    <label class="radio-inline radio-styled radio-danger"><input type="radio" asp-for="Ativo" value="@false" />Inativo</label>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn ink-reaction btn-primary">
+                            <input type="checkbox" asp-for="GerarNovaSenha" />
+                            @Html.DisplayNameFor(m => m.GerarNovaSenha)
+                        </label>
+                    </div>
+                    <div id="gerar-nova-senha" class="form-group" style="display: none">
+                        <input asp-for="NovaSenha" class="form-control" />
+                        <label asp-for="NovaSenha"></label>
+                    </div>
+
+                    <label class="checkbox checkbox-styled">
+                        <input type="checkbox" asp-for="TrocarSenha" />
+                        Trocar senha no próximo acesso
+                    </label>
+                </div>
+                <br /><br />
+                <label> Permissão de acesso dias da semana</label>
+                <div class="row">
+                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Domingo" @(Model.AcessoDiasDaSemana.HasFlag(DiasDaSemana.Domingo) ? "checked" : "") /> Domingo</label>
+                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Segunda" @(Model.AcessoDiasDaSemana.HasFlag(DiasDaSemana.Segunda) ? "checked" : "") /> Segunda</label>
+                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Terca" @(Model.AcessoDiasDaSemana.HasFlag(DiasDaSemana.Terca) ? "checked" : "") /> Terça</label>
+                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Quarta" @(Model.AcessoDiasDaSemana.HasFlag(DiasDaSemana.Quarta) ? "checked" : "") /> Quarta</label>
+                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Quinta" @(Model.AcessoDiasDaSemana.HasFlag(DiasDaSemana.Quinta) ? "checked" : "") /> Quinta</label>
+                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Sexta" @(Model.AcessoDiasDaSemana.HasFlag(DiasDaSemana.Sexta) ? "checked" : "") /> Sexta</label>
+                    <label class="checkbox-inline checkbox-styled"><input type="checkbox" name="DiasDaSemanaSelecionados" value="@DiasDaSemana.Sabado" @(Model.AcessoDiasDaSemana.HasFlag(DiasDaSemana.Sabado) ? "checked" : "") /> Sábado</label>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label>Niveis de acesso</label>
+                <select asp-for="NiveisSelecionados" asp-items="ViewBag.NiveisDeAcesso" multiple="multiple" class="mult-select" name="NiveisSelecionados"></select>
+            </div>
+
+        </div>
+        <div class="card-actionbar">
+            <div class="card-actionbar-row">
+                <button type="reset" class="btn btn-flat">Cancel</button>
+                <button type="submit" class="btn btn-flat btn-primary">@(Model != null ? "Atualizar" : "Adicionar")</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        $(document).ready(function () {
+            $('#GerarNovaSenha').change(function () {
+                if (this.checked) {
+                    $('#gerar-nova-senha').show();
+                } else {
+                    $('#gerar-nova-senha').hide();
+                }
+
+            })
+        });
+
+    </script>
+}

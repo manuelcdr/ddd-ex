@@ -1,0 +1,258 @@
+﻿@model PGLaw.Application.Contratos.Models.Pessoas.ClientePessoaJuridicaVM
+
+@using PGLaw.Infra.Cross.Common.Enums
+
+@section styles{
+    <link type="text/css" rel="stylesheet" href="~/css/theme-default/libs/wizard/wizard.css" />
+}
+
+<div class="card">
+    <!-- BEGIN CONTACT DETAILS HEADER -->
+    <div class="card-head style-primary">
+
+    </div><!--end .card-head -->
+    <!-- END CONTACT DETAILS HEADER -->
+    <!-- BEGIN CONTACT DETAILS -->
+    <div class="card-tiles">
+        <form asp-action="EditPessoaJuridica" class="form form-validation">
+            <div class="hbox-md col-md-12">
+                <div class="hbox-column col-md-9">
+                    <div class="row">
+                        <!-- BEGIN CONTACTS MAIN CONTENT -->
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="margin-bottom-xxl">
+                                <div class="pull-left width-3 clearfix hidden-xs">
+                                    <img class="img-circle size-2" src="~/images/avatar7.jpg" alt="" />
+                                </div>
+                                <h1 class="text-light no-margin">@Model.Pessoa.Nome</h1>
+                                <h5 class="opacity-50">
+                                    @Model.Pessoa.DadosPessoaJuridica.RazaoSocial
+                                </h5>
+                                &nbsp;&nbsp;
+                                @*<div class="star-rating">
+                                        <input type="number" name="rating" class="rating" value="3" />
+                                    </div>*@
+                            </div><!--end .margin-bottom-xxl -->
+                            <ul class="nav nav-tabs" data-toggle="tabs">
+                                <li class="active"><a href="#dadospessoais">DADOS PESSOAIS</a></li>
+                                <li><a href="#endereco">ENDEREÇO</a></li>
+                                <li><a href="#segmento">SEGMENTO</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <!-- BEGIN DADOS PESSOAIS -->
+                                <div class="tab-pane active" id="dadospessoais">
+                                    <br />
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.DadosPessoaJuridica.RazaoSocial" class="form-control">
+
+                                            <label asp-for="Pessoa.DadosPessoaJuridica.RazaoSocial"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.Nome" class="form-control">
+                                            <label asp-for="Pessoa.Nome"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.DadosPessoaJuridica.CNPJ" class="form-control" data-inputmask="'mask': '99.999.999/9999-99'" data-rule-cnpjBR="true">
+                                            <label asp-for="Pessoa.DadosPessoaJuridica.CNPJ"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.DadosPessoaJuridica.InscricaoEstadual" class="form-control">
+                                            <label asp-for="Pessoa.DadosPessoaJuridica.InscricaoEstadual"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.DadosPessoaJuridica.inscricaoMunicipal" class="form-control">
+                                            <label asp-for="Pessoa.DadosPessoaJuridica.inscricaoMunicipal"></label>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <br /><br />
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.Telefone" class="form-control" data-inputmask="'mask': '(99) 9999-9999'">
+                                            <label asp-for="Pessoa.Telefone"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.Url" class="form-control">
+                                            <label asp-for="Pessoa.Url"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.Email" class="form-control">
+                                            <label asp-for="Pessoa.Email"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input asp-for="Pessoa.DadosPessoaJuridica.EmailFinanceiro" class="form-control">
+                                            <label asp-for="Pessoa.DadosPessoaJuridica.EmailFinanceiro"></label>
+                                        </div>
+                                    </div>
+                                </div><!--end #dadospessoais -->
+                                <!-- END DADOS PESSOAIS -->
+                                <!-- BEGIN ENDEREÇO -->
+                                <div class="tab-pane" id="endereco">
+                                    <br />
+                                    <div class="tab-pane" id="endereco">
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                @*<button id="addEndereco" type="button" class="btn ink-reaction btn-icon-toggle btn-lg btn-primary"><i class="md md-my-library-add"></i></button>*@
+                                                <a id="addEndereco" class="btn ink-reaction  btn-floating-action btn-floating  btn-primary " title="Novo"><i class="md md-my-library-add"></i></a>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div id="partial-container-lista-endereco">
+                                            @Html.Partial("../Enderecos/_Lista")
+                                        </div>
+                                    </div><!--end #ENDEREÇO -->
+                                </div>
+                                <!-- END CONTATO -->
+                                <!-- BEGIN CONTACTS SEGMENTO -->
+                                <div class="tab-pane" id="segmento">
+                                    <br />
+                                    <div class="col-lg-6 col-sm-12">
+
+                                        <div class="form-group">
+                                            <input asp-for="Segmento" class="form-control" />
+                                            <label asp-for="Segmento"></label>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+
+                                        <div class="form-group">
+                                            <input asp-for="Atuacao" class="form-control" />
+                                            <label asp-for="Atuacao"></label>
+                                        </div>
+
+                                    </div>
+                                </div><!--end #segmento -->
+                                <!-- END CONTACTS SEGMENTO -->
+
+                            </div><!--end .tab-content -->
+                        </div><!--end .col -->
+                        <!-- END CONTACTS MAIN CONTENT -->
+
+                    </div><!--end .row -->
+                </div><!--end .hbox-column -->
+                <!-- BEGIN CONTACTS COMMON DETAILS -->
+                <div class="hbox-column col-md-3 style-default-light">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>Resumo</h4>
+                            <br />
+                            <dl class="dl-horizontal dl-icon">
+                                <dt><span class="fa fa-fw fa-graduation-cap fa-lg opacity-50"></span></dt>
+                                <dd>
+                                    <span class="opacity-50">Carreira</span><br />
+                                    <span class="text-medium">Manager director, Commercial manager, Commercial assistant</span>
+                                </dd>
+                                @*<dt><span class="fa fa-fw fa-gift fa-lg opacity-50"></span></dt>
+                                    <dd>
+                                            <span class="opacity-50">Aniversário</span><br />
+                                            <span class="text-medium">@Model.Pessoa.DadosPessoaFisica?.DataNascimento</span>
+                                        </dd>*@
+                            </dl><!--end .dl-horizontal -->
+                            <br />
+                            <h4>Informações de contato</h4>
+                            <br />
+                            <dl class="dl-horizontal dl-icon">
+                                <dt><span class="fa fa-fw fa-mobile fa-lg opacity-50"></span></dt>
+                                <dd>
+                                    <span class="opacity-50">Phone</span><br />
+                                    <span class="text-medium">@Convert.ToInt64(Model.Pessoa.Telefone).ToString("(##)####-####")</span> @*&nbsp;<span class="opacity-50">work</span>*@<br />
+                                    @*<span class="text-medium">@Model.Pessoa.DadosPessoaFisica?.Celular</span>*@ @*&nbsp;<span class="opacity-50">mobile</span>*@
+                                </dd>
+                                <dt><span class="fa fa-fw fa-envelope-square fa-lg opacity-50"></span></dt>
+                                <dd>
+                                    <span class="opacity-50">Email</span><br />
+                                    <a class="text-medium" href="mailto:@Model.Pessoa.Email">@Model.Pessoa.Email</a>
+                                </dd>
+                                <dt><span class="fa fa-fw fa-location-arrow fa-lg opacity-50"></span></dt>
+                                <dd>
+                                    <span class="opacity-50">Endereço comercial</span><br />
+                                    <span class="text-medium">
+                                        Damrak 7<br />
+                                        Amsterdam, 1012 LG<br />
+                                        Netherlands
+                                    </span>
+                                </dd>
+                                <dd class="full-width"><div id="map-canvas" class="border-white border-xl height-5"></div></dd>
+                            </dl><!--end .dl-horizontal -->
+                        </div><!--end .col -->
+                    </div><!--end .row -->
+                </div><!--end .hbox-column -->
+                <!-- END CONTACTS COMMON DETAILS -->
+            </div><!--end .hbox-md -->
+            <div class="fixed-action-btn">
+                @*<a class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-righ" title="Salvar"><i class="md md-done-all"></i></a>*@
+                <button type="submit" class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-righ"><i class="md md-done-all"></i></button></li>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Pessoa.Id" />
+        </form>
+    </div><!--end .card-tiles -->
+    <!-- END CONTACT DETAILS -->
+</div><!--end .card -->
+
+
+<div class="fixed-action-left-btn">
+    <a class="btn ink-reaction  btn-floating-action btn-floating btn-large btn-primary-dark stick-bottom-righ" title="Voltar" href="/Clientes"><i class="glyphicon glyphicon-arrow-left"></i></a>
+</div>
+
+
+<!-- BEGIN FORM MODAL MARKUP -->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formModalLabel">Endereço</h4>
+            </div>
+            <form class="form floating-label form-validation" role="form">
+                <div class="modal-body">
+                    <div id="partial-container-endereco" class="card-body no-padding">
+                        @Html.Partial("../Enderecos/_Create")
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END FORM MODAL MARKUP -->
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/lib/wizard/jquery.bootstrap.wizard.min.js"></script>
+
+    <script>
+        $(function () {
+
+            $(":input").inputmask();
+
+            $("#addEndereco").click(function () {
+                $('#formModal').modal();
+            });
+
+        });
+
+
+    </script>
+}

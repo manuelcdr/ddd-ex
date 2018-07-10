@@ -1,0 +1,194 @@
+﻿@model IEnumerable<PGLaw.Application.Juridico.Models.ProcessoVM>
+
+
+<div class="small-padding style-primary-dark">
+    <p class="text-light text-right no-margin">A busca retornou <strong>@(Model?.Count() ?? 0)</strong> resultados</p>
+</div>
+
+@if (Model.Any())
+{
+    <table id="table1" class="table table-condensed table-striped order-column hover">
+        <thead>
+            <tr>
+                <th class="details-control sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 56px;"></th>
+                <th class="sort-alpha">Cliente</th>
+                <th class="sort-alpha">Orgão</th>
+                <th>Processo</th>
+                <th class="hidden">Pessoas</th>
+                <th class="text-right"></th>
+            </tr>
+        </thead>
+        <tbody class="">
+            @foreach (var item in Model)
+            {
+                <tr class="text-sm">
+                    <td class="details-control"></td>
+                    <td>
+                        @item.Cliente.Pessoa.Nome
+                    </td>
+                    <td>
+                        @item.Orgao.Descricao
+                    </td>
+                    <td>
+                        @if (item.NumeroInstancia == 1)
+                        {
+                            <p class="no-padding no-margin">1ª: @item.NumeroPrimeiraInstancia</p>
+                        }
+                        @if (item.NumeroInstancia == 2)
+                        {
+                            <p class="no-padding no-margin">2ª: @item.NumeroSegundaInstancia</p>
+                        }
+                        @if (item.NumeroInstancia == 3)
+                        {
+                            <p class="no-padding no-margin">3ª: @item.NumeroTerceiraInstancia</p>
+                        }
+                        @*@if (!string.IsNullOrEmpty(item.NumeroPasta))
+                            {
+                                <p class="no-padding no-margin">Pasta: @item.NumeroPasta</p>
+                            }
+                            @if (!string.IsNullOrEmpty(item.Observacoes))
+                            {
+                                <p class="no-padding no-margin">Obs: @item.Observacoes</p>
+                            }*@
+                    </td>
+                    @*<td class="text-right">
+                            <nobr>
+                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                            </nobr>
+                        </td>*@
+                    <td class="hidden">
+                        <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">
+                            @foreach (var pessoa in item.ProcessoPessoa)
+                            {
+                                <tr>
+                                    <td>@pessoa.TipoRelacao</td>
+                                    <td>@pessoa.Nome</td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                    <td class="text-right">
+                        <nobr>
+                            <a class="btn btn-flat ink-reaction btn-default" asp-action="Details" asp-route-id="@item.Id">
+                                <i class="md md-description"></i>
+                            </a>
+                        </nobr>
+                    </td>
+                    </tr>
+                }
+            </tbody>
+            </table>
+        }
+        else
+        {
+            <script>
+                $(function () {
+                    toastr.warning("Sua busca não retornou resultados");
+                })
+            </script>
+        }
+<script>
+
+    formatDetails = function (dados) {
+        let $ul = $('<ul></ul>');
+        console.log(dados);
+        //dados.pessoas.each(pessoa, function () {
+        //    let $li = $(`<li>${pessoa.TipoRelacao}: ${pessoa.Nome}</li>`);
+        //    $ul.append($li);
+        //});
+        return $ul.html();
+    };
+
+
+    $(function () {
+        var table = $('#table1').DataTable({
+            "dom": 'lCfrtip',
+            "order": [],
+            "colVis": {
+                "buttonText": "Colunas",
+                "overlayFade": 0,
+                "align": "right"
+            },
+            "columnDefs": [{
+                "targets": [0,5],
+                "orderable": false
+            }],
+            "tableTools": {
+                "sSwfPath": $('#table1').data('swftools')
+            },
+            "language": {
+                "lengthMenu": '_MENU_ resultados por página',
+                "search": '<i class="fa fa-search"></i>',
+                "info": "mostrando _START_ até _END_ de _TOTAL_ resultados",
+                "infoEmpty": "sem resultados",
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+
+        //Add event listener for opening and closing details
+        var o = this;
+        $('#table1 tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child(row.data()[4]).show();
+                tr.addClass('shown');
+            }
+        });
+
+
+        //$('#table1').DataTable({
+        //    "dom": 'lCfrtip',
+        //    "order": [],
+        //    "colVis": {
+        //        "buttonText": "Colunas",
+        //        "overlayFade": 0,
+        //        "align": "right"
+        //    },
+        //    "tableTools": {
+        //        "sSwfPath": $('#table1').data('swftools')
+        //    },
+        //    "language": {
+        //        "lengthMenu": '_MENU_ entries per page',
+        //        "search": '<i class="fa fa-search"></i>',
+        //        "paginate": {
+        //            "previous": '<i class="fa fa-angle-left"></i>',
+        //            "next": '<i class="fa fa-angle-right"></i>'
+        //        }
+        //    }
+        //});
+
+        //$('#table1 tbody').on('click', 'td.details-control', function () {
+        //    var tr = $(this).closest('tr');
+        //    var row = table.row(tr);
+
+        //    if (row.child.isShown()) {
+        //        // This row is already open - close it
+        //        row.child.hide();
+        //        tr.removeClass('shown');
+        //    }
+        //    else {
+        //        // Open this row
+        //        row.child(formatDetails(row.data())).show();
+        //        tr.addClass('shown');
+        //    }
+        //});
+
+        //$('#table1 tbody').on('click', 'tr', function () {
+        //    $(this).toggleClass('selected');
+        //});
+    })
+</script>
+
+

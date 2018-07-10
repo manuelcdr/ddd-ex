@@ -1,0 +1,26 @@
+﻿@model PGLaw.Application.Juridico.Models.Processos.OrgaoVM
+
+@{
+    ViewBag.Title = "Novo Orgão";
+}
+
+<form asp-action="Create" method="post" class="form">
+    <div class="card card-underline">
+        <div class="card-head card-head-sm style-primary">
+            <header>@ViewBag.Title</header>
+        </div>
+        <div class="card-body">
+            @Html.Partial("_Model", Model)
+        </div>
+        <div class="card-actionbar">
+            <div class="card-actionbar-row">
+                <button type="reset" class="btn btn-flat">Cancel</button>
+                <button type="submit" class="btn btn-flat btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

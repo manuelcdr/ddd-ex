@@ -1,0 +1,90 @@
+﻿@model PGLaw.Application.Juridico.Models.ProcessoVM
+
+<hr />
+<div class="row">
+    <div class="col-xs-6 col-sm-2">
+        <strong>Família Ofensora</strong><br />
+        @Model.FamiliaOfensora.Descricao
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Área Ofensora</strong><br />
+        @Model.AreaOfensora.Descricao
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-xs-6 col-sm-2">
+        <strong>Tipo de Ação</strong><br />
+        @Model.TipoAcao.Descricao
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Orgão</strong><br />
+        @Model.Orgao.Descricao
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Nº da Sessão</strong><br />
+        @*@Model.*@
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Nº da Vara</strong><br />
+        @Model.Vara
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Nº do Andar</strong><br />
+        @*@Model.NumeroAndar*@
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-xs-6 col-sm-2">
+        <strong>Data Distribuição</strong><br />
+        @Model.DataDistribuicao.GetValueOrDefault().ToShortDateString()
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Data Citação</strong><br />
+        @Model.DataCitacao.GetValueOrDefault().ToShortDateString()
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Rito</strong><br />
+        @*@Model.TipoRito*@
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-xs-6 col-sm-2">
+        <strong>Forum</strong><br />
+        @(Model.Forum?.Nome ?? "")
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <strong>Cidade</strong><br />
+        @(Model.Cidade?.Nome ?? "")
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Estado</strong><br />
+        @(Model.Cidade?.Estado?.Nome ?? "")
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong></strong><br />
+
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-xs-6 col-sm-2">
+        <strong>Data de Inclusão</strong><br />
+        @*@Model.DataInclusao.ToShortDateString()*@
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Data de Alteração</strong><br />
+        @*@Model.DataAlteracao.ToShortDateString()*@
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <strong>Usuário de Alteração</strong><br />
+        @*@Model.UsuarioAlteracao*@
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <strong>Observações</strong><br />
+        @*@Model.Obsercacoes*@
+    </div>
+</div>
+

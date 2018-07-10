@@ -1,0 +1,316 @@
+﻿@model PGLaw.Application.Juridico.Models.ProcessoVM
+
+<div id="card-time-line" class="card card-collapsable no-card-shadow no-shadow card-printable">
+    <div class="card-head card-head-xs">
+        <div class="card-header text-center">
+            <header class="text-light text-center">Andamentos e Prazos Processuais</header>
+            <div class="btn-group">
+                <a id="btn-collapse-card-timeline" class="btn btn-collapse"><i class="md md-expand-more"></i></a>
+                @*<div class="btn-group">
+                    <a class="btn ink-reaction btn-floating-action btn-xs btn-primary dropdown-toggle" data-toggle="dropdown"><i class="md md-add"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><a href="#" data-toggle="modal" data-target="#modalAndamento"><i class="fa fa-circle text-primary text-center" style="min-width: 15.6px;"></i> Andamento</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#modalPrazo"><i class="md md-timer text-warning text-center"></i> Prazo</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#modalProvidencia"><i class="md md-timer text-warning text-center"></i> Providencia</a></li>
+                    </ul>
+                </div>*@
+            </div>
+        </div>
+    </div>
+    @*@if (Model.Count() > 0)
+        {*@
+    <div class="card-body no-margin no-padding not-printable">
+        <form class="form" id="formFilter" accept-charset="utf-8" method="post">
+            <br>
+            <div class="text-center">
+                <label class="checkbox-inline checkbox-styled checkbox-primary">
+                    <input class="timeline-check" type="checkbox" value="Andamento" checked=""><span>Andamentos</span>
+                </label>
+                <label class="checkbox-inline checkbox-styled checkbox-warning">
+                    <input class="timeline-check" type="checkbox" value="Prazo" checked=""><span>Prazos</span>
+                </label>
+                <label class="checkbox-inline checkbox-styled checkbox-danger">
+                    <input class="timeline-check" type="checkbox" value="Audiência" checked=""><span>Audiências</span>
+                </label>
+                <label class="checkbox-inline checkbox-styled checkbox-accent-light">
+                    <input class="timeline-check" type="checkbox" value="Depósito" checked=""><span>Depósito</span>
+                </label>
+                <label class="checkbox-inline checkbox-styled checkbox-accent">
+                    <input class="timeline-check" type="checkbox" value="Penhora" checked=""><span>Penhora</span>
+                </label>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <hr class="no-margin" />
+        <div class="contain-sm">
+            <ul class="timeline collapse-xs">
+                @*@{ var count = 1; }
+                    @foreach (var item in Model.OrderByDescending(a => a.DataAndamento))
+                    {
+                        var andamento = true;
+                        var styleDivIcone = "timeline-circ";
+                        var styleIcone = "";
+                        var style = "";
+                        var dataTempo = item.DataAndamento.ToLongDateString();
+
+                        switch (item.TipoDado)
+                        {
+                            case "Prazo":
+                                andamento = false;
+                                styleIcone = "md md-timer";
+                                style = "style-warning";
+                                styleDivIcone = "timeline-circ circ-lg " + style;
+                                break;
+                            case "Audiência":
+                                andamento = false;
+                                styleIcone = "md md-timer";
+                                style = "style-danger";
+                                styleDivIcone = "timeline-circ circ-xl " + style;
+                                dataTempo = @item.DataAndamento.ToShortTimeString() + ", " + dataTempo;
+                                break;
+                            case "Penhora":
+                                andamento = false;
+                                styleIcone = "md md-attach-money";
+                                style = "style-darger";
+                                styleDivIcone = "timeline-circ circ-lg " + style;
+                                break;
+                            case "Depósito":
+                                andamento = false;
+                                styleIcone = "md md-attach-money";
+                                style = "style-danger";
+                                styleDivIcone = "timeline-circ circ-lg " + style;
+                                break;
+                            default:
+                                andamento = true;
+                                styleIcone = "";
+                                style = "style-primary";
+                                styleDivIcone = "timeline-circ style-primary";
+                                break;
+                        }
+                        <li class="@(item.TipoDado != "Andamento" ? "timeline-inverted" : "") time-line-@item.TipoDado timeline-item">
+                            <div class="@styleDivIcone timeline-icone timeline-collapse" style="cursor: pointer; z-index: 999;" data-timelineId="@item.Id">
+                                @if (!andamento)
+                                {
+                                    <span class="@styleIcone timeline-collapse"></span>
+                                }
+                            </div>
+                            <div data-timelineId="@item.Id" id="timeline-entry-@item.Id" class="timeline-entry timeline-details timeline-entry-@item.TipoDado">
+                                <div class="card card-outlined @style">
+                                    <div class="card-body small-padding">
+                                        <span class="pull-right btn-mais-informacoes">
+                                            <a class="btn btn-icon-toggle btn-sm"><i class="md md-more-vert no-margin"></i></a>
+                                        </span>
+                                        <p class="clearfix text-light">
+                                            <span class="text-lg text-primary">@Html.Raw(item.Tipo)</span><br />
+                                            <small class="text-uppercase text-sm text-primary">@dataTempo</small><br />
+                                        </p>
+                                        <p>
+                                            @(Html.Raw(!item.Descricao.Trim().Equals(item.Tipo.Trim()) ? item.Descricao : ""))
+                                        </p>
+                                    </div>
+                                    <div class="card-body small-padding mais-informacoes @style" style="display: none;">
+                                        <small class="text-uppercase text-sm pull-right">@item.UsuarioInclusao</small><br />
+                                        <small class="text-uppercase text-xs pull-right">@(item.DataInclusao.ToShortTimeString()), @(item.DataInclusao.ToLongDateString())</small><br />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        count++;
+                    }*@
+
+                <li class="time-line-Andamento timeline-item" data-timelineId="1">
+                    <div class="timeline-circ style-primary timeline-icone timeline-collapse" data-timelineId="1" style="cursor: pointer; z-index: 999;">
+                    </div>
+                    <div id="timeline-entry-1" class="timeline-entry timeline-details timeline-entry-Andamento" data-timelineId="1">
+                        <div class="card card-outlined style-primary">
+                            <div class="card-body small-padding">
+                                <span class="pull-right btn-mais-informacoes">
+                                    <a class="btn btn-icon-toggle btn-sm"><i class="md md-more-vert no-margin"></i></a>
+                                </span>
+                                <p class="clearfix text-light">
+                                    <span class="text-lg text-primary">Processo Criado</span><br />
+                                    <small class="text-uppercase text-sm text-primary">@DateTime.Now.ToShortDateString()</small><br />
+                                </p>
+                                <p>
+                                </p>
+                            </div>
+                            <div class="card-body small-padding mais-informacoes style-primary" style="display: none;">
+                                <small class="text-uppercase text-sm pull-right">Sistema</small><br />
+                                <small class="text-uppercase text-xs pull-right">@(DateTime.Now.ToShortTimeString()), @(DateTime.Now.ToLongDateString())</small><br />
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    @*}
+        else
+        {
+            <div class="card-body no-margin no-padding">
+                <div class="alert alert-info" role="alert">
+                    <span><i class="fa fa-info-circle text-lg"></i></span>&nbsp;&nbsp;&nbsp;Não há andamentos ou prazos processuais até o momento.
+                </div>
+            </div>
+        }*@
+</div>
+
+
+<script>
+
+    class ItemTimeLine {
+        constructor(id, descricao, tipo, usuario, dataTempo, dataInclusao, tipoDado) {
+            this.Id = id;
+            this.Descricao = descricao;
+            this.Tipo = tipo;
+            this.UsuarioInclusao = usuario;
+            this.DataTempo = dataTempo;
+            this.DataInclusao = dataInclusao;
+            this.TipoDado = tipoDado;
+
+            this.EhAndamento = true;
+            this.StyleDivIcone = "";
+            this.StyleIcone = "";
+            this.Style = "";
+
+            this.DefinirLayout();
+        };
+        DefinirLayout() {
+            this.EhAndamento = true;
+            this.StyleDivIcone = "timeline-circ";
+            this.StyleIcone = "";
+            this.Style = "";
+
+            switch (this.TipoDado) {
+                case "Prazo":
+                    this.EhAndamento = false;
+                    this.StyleIcone = "md md-timer";
+                    this.Style = "style-warning";
+                    this.StyleDivIcone = "timeline-circ circ-lg " + this.Style;
+                    break;
+                case "Audiência":
+                    this.EhAndamento = false;
+                    this.StyleIcone = "md md-timer";
+                    this.Style = "style-danger";
+                    this.StyleDivIcone = "timeline-circ circ-xl " + this.Style;
+                    break;
+                case "Penhora":
+                    this.EhAndamento = false;
+                    this.StyleIcone = "md md-attach-money";
+                    this.Style = "style-darger";
+                    this.StyleDivIcone = "timeline-circ circ-lg " + this.Style;
+                    break;
+                case "Depósito":
+                    this.EhAndamento = false;
+                    this.StyleIcone = "md md-attach-money";
+                    this.Style = "style-danger";
+                    this.StyleDivIcone = "timeline-circ circ-lg " + this.Style;
+                    break;
+                default:
+                    this.EhAndamento = true;
+                    this.StyleIcone = "";
+                    this.Style = "style-primary";
+                    this.StyleDivIcone = "timeline-circ style-primary";
+                    break;
+            }
+        }
+    };
+
+    function eventClickBtnMaisInformacoes(element) {
+        let $card = $(this).parents('.card').eq(0);
+        let $maisInfo = $card.find('.mais-informacoes').eq(0);
+        $maisInfo.slideToggle();
+    };
+
+    function montarItemTimeLine(item) {
+        let $li = $(`
+            <li class="time-line-${item.TipoDado} ${item.EhAndamento ? '' : 'timeline-inverted'} timeline-item" style="display: none;" data-timelineId="${item.Id}">
+                <div class="${item.StyleDivIcone} timeline-circ style-primary timeline-icone timeline-collapse" style="cursor: pointer; z-index: 999;" data-timelineId="${item.Id}" >
+                    ${item.EhAndamento ? '' : `<span class="${item.StyleIcone} timeline-collapse"></span>`}
+                </div>
+                <div data-timelineId="${item.Id}" id="timeline-entry-${item.Id}" class="timeline-entry timeline-entry-${item.TipoDado} timeline-details">
+                    <div class="card card-outlined ${item.Style}">
+                        <div class="card-body small-padding">
+                            <span class="pull-right btn-mais-informacoes">
+                                <a class="btn btn-icon-toggle btn-sm"><i class="md md-more-vert no-margin"></i></a>
+                            </span>
+                            <p class="clearfix text-light">
+                                <span class="text-lg text-primary">${item.Tipo}</span><br />
+                                <small class="text-uppercase text-sm text-primary">${item.DataTempo}</small><br />
+                            </p>
+                            <p>
+                                ${item.Descricao}
+                            </p>
+                        </div>
+                        <div class="card-body small-padding mais-informacoes ${item.Style}" style="display: none;">
+                            <small class="text-uppercase text-sm pull-right">${item.UsuarioInclusao}</small><br />
+                            <small class="text-uppercase text-xs pull-right">${item.DataInclusao}</small><br />
+                        </div>
+                    </div>
+                </div>
+            </li>`
+        );
+
+        let $btnMaisInfo = $li.find('.card').eq(0).find('.card-body').eq(0).find('.btn-mais-informacoes');
+
+        $($btnMaisInfo).bind('click', eventClickBtnMaisInformacoes);
+
+        return $li;
+    };
+
+    function toogleMostrarEsconder(seletor) {
+        $(seletor).slideToggle();
+    };
+
+    function esconder(seletor) {
+        $(seletor).slideUp();
+    };
+
+    function mostrar(seletor) {
+        $(seletor).slideDown();
+    };
+
+    function addItemNaTimeLine(item) {
+        if ($('#card-time-line').hasClass('card-collapsed'))
+            $('#btn-collapse-card-timeline').click();
+
+        let itemDom = montarItemTimeLine(item);
+
+        $('.timeline').delay(250).prepend(itemDom);
+
+        itemDom.delay(400).slideDown();
+    };
+
+    function successAjax(dados) {
+        console.log('sucesso');
+        $('.cancel-modal').click();
+        let item = new ItemTimeLine(dados.Id, dados.Descricao, dados.Tipo, dados.UsuarioInclusao, dados.DataTempo, dados.DataInclusao, dados.TipoDado);
+        addItemNaTimeLine(item);
+    };
+
+    function errorAjax(jq, status, error) {
+        console.log(error);
+        toastr.error("Ocorreu um erro ao tentar adicionar o andamento.");
+    };
+
+    $(function () {
+        $('.btn-mais-informacoes').click(eventClickBtnMaisInformacoes);
+
+        $('.timeline-check').click(function () {
+            if ($(this).is(':checked')) {
+                mostrar(`.timeline-entry-${$(this).val()}`);
+            } else {
+                esconder(`.timeline-entry-${$(this).val()}`);
+            }
+        });
+
+        $('.timeline').click(function (event) {
+            if ($(event.target).hasClass('timeline-collapse')) {
+                let timelineItem = $(event.target).parents('.timeline-item').eq(0);
+                let itemDetails = timelineItem.find('.timeline-details').eq(0);
+                toogleMostrarEsconder(itemDetails);
+            }
+        });
+    });
+</script>

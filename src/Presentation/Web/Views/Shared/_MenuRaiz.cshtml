@@ -1,0 +1,21 @@
+﻿@model PGLaw.Application.Sistema.Models.MenuVM
+
+<li class="gui-folder">
+    <a @(Model.Ferramenta ? $"href='{Model.Url}'" : "")>
+        <div class="gui-icon"><i class="@ViewBag.IconClassMenu"></i></div>
+        <span class="title">@Model.Titulo</span>
+    </a>
+    <!--start submenu -->
+    @if (Model.MenusFilhos.Any())
+    {
+        <ul>
+            @foreach (var filho in Model.MenusFilhos.ToArray())
+            {
+                Html.Partial("_MenuFilho", filho);
+            }
+        </ul>
+    }
+</li>
+
+
+

@@ -1,0 +1,432 @@
+﻿@model PGLaw.Application.Contratos.Models.Contratos.ContratoVM
+
+
+@section styles{
+
+}
+
+<style>
+    [hidden] {
+        display: none !important;
+    }
+</style>
+
+
+<form id="formEdit" asp-controller="Contratos" asp-action="EditContrato" enctype="multipart/form-data" method="post" class="form-horizontal form-validation">
+
+    <div class="modal-body">
+        <input type="hidden" asp-for="Id" class="form-control">
+        <div>
+            <ul class="nav nav-tabs" data-toggle="tabs">
+                <li class="active"><a href="#Basico">Dados Básicos</a></li>
+                <li><a href="#Servicos">Serviços Previstos e Forma de Pagamento</a></li>
+                @*<li><a href="#Despesas">Tipo de Despesas Reembolsáveis</a></li>*@
+                <li><a href="#Arquivos">Arquivos</a></li>
+            </ul>
+        </div>
+        <div class="tab-content card-body">
+            <div class="tab-pane active" id="Basico">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="StatusId"></label>
+                    </div>
+                    <div class="col-lg-4 col-sm-9">
+                        <select asp-for="StatusId" class="form-control select" data-val="true" data-val-required="The field is required.">
+                            <option value=""></option>
+                            <option value="1">Em Análise</option>
+                            <option value="2">Aprovado</option>
+                        </select>
+                        <span asp-validation-for="StatusId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="TipoId"></label>
+                    </div>
+                    <div class="col-lg-4 col-sm-9">
+                        <select asp-for="TipoId" asp-items="ViewBag.Tipo" class="form-control select" data-val="true" data-val-required="The field is required.">
+                            <option value=""></option>
+                        </select>
+                        <span asp-validation-for="TipoId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="RazaoSocial"></label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input asp-for="RazaoSocial" class="form-control" required>
+                        <span asp-validation-for="RazaoSocial"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="Ativo"></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline radio-styled">
+                            <input type="radio" asp-for="Ativo" value="true"><span>Sim</span>
+                        </label>
+                        <label class="radio-inline radio-styled radio-danger">
+                            <input type="radio" asp-for="Ativo" value="false"><span>Não</span>
+                        </label>
+                    </div><!--end .col -->
+                </div><!--end .form-group -->
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="GerenciaId"></label>
+                    </div>
+                    <div class="col-lg-4 col-sm-9">
+                        <select asp-for="GerenciaId" asp-items="ViewBag.Gerencia" class="form-control" data-val="true" data-val-required="The field is required.">
+                            <option value=""></option>
+                        </select>
+                        <span asp-validation-for="GerenciaId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="DataAssinatura"></label>
+                    </div>
+                    <div class="col-lg-4 col-sm-9">
+                        <input asp-for="DataAssinatura" class="form-control">
+                        <span asp-validation-for="DataAssinatura"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="VigenciaId"></label>
+                    </div>
+                    <div class="col-lg-4 col-sm-9">
+                        <select asp-for="VigenciaId" asp-items="ViewBag.Vigencia" class="form-control" data-val="true" data-val-required="The field is required.">
+                            <option value=""></option>
+                        </select>
+                        <span asp-validation-for="VigenciaId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="Objeto"></label>
+                    </div>
+                    <div class="col-sm-9">
+                        <textarea asp-for="Objeto" class="form-control" rows="5" placeholder=""></textarea>
+                        <span asp-validation-for="Objeto"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="IndiceReajusteId"></label>
+                    </div>
+                    <div class="col-lg-4 col-sm-9">
+                        <select asp-for="IndiceReajusteId" asp-items="ViewBag.IndiceReajuste" class="form-control" data-val="true" data-val-required="The field is required.">
+                            <option value=""></option>
+                        </select>
+                        <span asp-validation-for="IndiceReajusteId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="ClausulaJuros"></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline radio-styled">
+                            <input type="radio" asp-for="ClausulaJuros" value="true"><span>Sim</span>
+                        </label>
+                        <label class="radio-inline radio-styled radio-danger">
+                            <input type="radio" asp-for="ClausulaJuros" value="false"><span>Não</span>
+                        </label>
+                    </div><!--end .col -->
+                </div><!--end .form-group -->
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="Juros"></label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input asp-for="Juros" class="form-control">
+                        <span asp-validation-for="Juros"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="ClausulaMulta"></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline radio-styled">
+                            <input type="radio" asp-for="ClausulaMulta" value="true"><span>Sim</span>
+                        </label>
+                        <label class="radio-inline radio-styled radio-danger">
+                            <input type="radio" asp-for="ClausulaMulta" value="false"><span>Não</span>
+                        </label>
+                    </div><!--end .col -->
+                </div><!--end .form-group -->
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label asp-for="Multa"></label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input asp-for="Multa" class="form-control">
+                        <span asp-validation-for="Multa"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="Servicos">
+                <div class="card panel">
+                    <div class="card-head collapsed" data-toggle="collapse" data-parent="#accordion7" data-target="#accordion7-4">
+                        <header>Adicionar Serviço</header>
+                        <div class="tools">
+                            <a class="btn btn-icon-toggle"><i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <div id="accordion7-4" class="collapse">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label>Tipo</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <select id="AddTipoServico" name="AddTipoServico" asp-items="ViewBag.TipoServico" class="form-control select" data-val="true" data-val-required="The field is required.">
+                                        <option value=""></option>
+                                    </select>
+                                    <span validation-for="AddTipoServico"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label>Valor</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" id="AddValorServico" class="form-control currency" />
+                                    <span validation-for="AddValorServico"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label>Forma de Pagamento</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <select id="AddFormaPagamento" name="AddFormaPagamento" asp-items="ViewBag.FomaPagamento" class="form-control" data-val="true" data-val-required="The field is required.">
+                                        <option value=""></option>
+                                    </select>
+                                    <span validation-for="AddFormaPagamento"></span>
+                                </div>
+                            </div>
+                            <button id="addServico" type="button" class="btn btn-icon-toggle btn-primary" onclick="adicionarServicoClick(this);"><i class="md md-my-library-add"></i></button>
+                        </div>
+                    </div>
+                </div><!--end .panel -->
+                @*<button type="button" class="btn btn-icon-toggle btn-primary" data-toggle="modal" data-target="#formModalServicos"><i class="md md-my-library-add"></i></button>*@
+
+                <table id="tbServicos" class="table no-margin table-hover" style="font-size:13px">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Forma de Pagamento</th>
+                            <th style="text-align:Center">Opção</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ServicoContratos != null)
+                        {
+                            foreach (var item in Model.ServicoContratos)
+                            {
+                                <tr>
+                                    <td>@item.TipoServico.Descricao  <input type="hidden" asp-for="@item.Id" class="form-control"></td>
+                                    <td>@item.Valor</td>
+                                    <td>@item.FormaPagamento.Descricao</td>
+                                </tr>
+                            }
+                        }
+                        @*<tr>
+                                <td>Distribuição</td>
+                                <td>373.530,00</td>
+                                <td>10 Parcelas</td>
+
+                                <td class="text-right">
+                                    <nobr>
+                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                    </nobr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Locação</td>
+                                <td>679.150,00</td>
+                                <td>Parcelas mensais</td>
+
+                                <td class="text-right">
+                                    <nobr>
+                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                    </nobr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Prestação de Serviço</td>
+                                <td>124.700,00</td>
+                                <td>12 parcelas</td>
+
+                                <td class="text-right">
+                                    <nobr>
+                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Edit row"><i class="fa fa-pencil"></i></button>
+                                        <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-placement="top" data-original-title="Delete row"><i class="fa fa-trash-o"></i></button>
+                                    </nobr>
+                                </td>
+                            </tr>*@
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="tab-pane" id="Despesas">
+                    <div class="form-group">
+                        <div class="col-sm-12 text-justify">
+                            <label class="checkbox-inline checkbox-styled">
+                                <input type="checkbox" value="option1"><span>Cartório</span>
+                            </label>
+                            <label class="checkbox-inline checkbox-styled">
+                                <input type="checkbox" value="option2"><span>Digitalização</span>
+                            </label>
+                            <label class="checkbox-inline checkbox-styled">
+                                <input type="checkbox" value="option3"><span>Locomoção</span>
+                            </label>
+                            <label class="checkbox-inline checkbox-styled">
+                                <input type="checkbox" value="option4"><span>Correios</span>
+                            </label>
+                            <label class="checkbox-inline checkbox-styled">
+                                <input type="checkbox" value="option5"><span>Telefonia</span>
+                            </label>
+                            <label class="checkbox-inline checkbox-styled">
+                                <input type="checkbox" value="option6"><span>Emolumentos</span>
+                            </label>
+                        </div><!--end .col -->
+                    </div><!--end .form-group -->
+                </div>*@
+            <div class="tab-pane" id="Arquivos">
+                <br />
+
+                <div class="form-group">
+                    <div class="col-sm-12 paddin" style="padding-left:30px">
+                        <div class="col-sm-12 col-md-2 col-lg-2">
+                            <label id="teste" class="btn btn-primary input-files" for="myFileSelector-1">
+                                <input id="myFileSelector-1" name="myFileSelector-1" type="file" style="display:none" multiple onchange="addArquivos(this);">
+                                Arquivo
+                            </label>
+                        </div>
+                        <div class="col-sm-12 col-md-10 col-lg-10">
+                            <input type="text" class="form-control" id="upload-file-info">
+                        </div>
+                    </div>
+                </div><!--end .form-group -->
+                @*<div class="form-group">
+                        <div class="col-sm-12 paddin" style="padding-left:40px">
+                            <button id="addArquivo" type="button" class="btn btn-icon-toggle btn-primary" onclick="adicionarArquivoClick(this);"><i class="md md-my-library-add"></i></button>
+                        </div>
+                    </div>*@
+                <div class="col-sm-12 paddin" style="padding:30px">
+                    <table id="tbArquivo" class="table" style="font-size:13px">
+                        <thead>
+                            <tr>
+                                <th>Arquivos</th>
+                                <th style="text-align:Center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.DocumentoContratos != null)
+                            {
+                                foreach (var item in Model.DocumentoContratos)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a asp-action="Download" asp-route-filename="@item.Link">@item.NomeOriginal</a>
+                                            <input type="hidden" asp-for="@item.Id" class="form-control">
+                                        </td>
+                                        @*<td>@item.NomeArquivo</td>*@
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" asp-controller="Contratos" asp-action="EditContrato" onclick="SalvarContrato(this)">Salvar</button>
+            </div>
+
+</form>
+
+@*<div class="modal fade" id="formModalServicos" tabindex="-1" role="dialog" aria-labelledby="formModalServicosLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="formModalServicosLabel">Contrato</h4>
+                </div>
+                <form class="form-horizontal" role="form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label>Tipo</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select name="TipoServico" asp-items="ViewBag.TipoServico" class="form-control select" data-val="true" data-val-required="The field is required.">
+                                    <option value=""></option>
+                                </select>
+                                <span validation-for="TipoServico"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label>Valor</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" id="ValorServico" class="form-control currency" />
+                                <span validation-for="ValorServico"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label>Forma de Pagamento</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select name="FormaPagamento" asp-items="ViewBag.FomaPagamento" class="form-control select" data-val="true" data-val-required="The field is required.">
+                                    <option value=""></option>
+                                </select>
+                                <span validation-for="FormaPagamento"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->*@
+
+
+
+<script src="~/js/core/source/AppVendor.js"></script>
+
+
+
+
+
+@section scripts{
+
+
+
+}
+
+

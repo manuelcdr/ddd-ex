@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PGLaw.Application.Contratos</AssemblyName>
+    <RootNamespace>PGLaw.Application.Contratos</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Contratos\Contratos.csproj" />
+    <ProjectReference Include="..\..\Domain\Core\Core.csproj" />
+    <ProjectReference Include="..\..\Infra\Cross\AspNetFilters\AspNetMvc.csproj" />
+    <ProjectReference Include="..\..\Infra\Cross\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Pessoas\" />
+  </ItemGroup>
+
+</Project>

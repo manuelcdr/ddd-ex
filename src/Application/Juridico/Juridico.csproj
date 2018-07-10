@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PGLaw.Application.Juridico</AssemblyName>
+    <RootNamespace>PGLaw.Application.Juridico</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Remove="AutoMapper\ViewModelToDomainProfile.cs" />
+    <Compile Remove="Models\Pessoas\EquipeVM.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Juridico.csproj.vspscc" />
+    <None Remove="PGLaw.Application.Juridico.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Core\Core.csproj" />
+    <ProjectReference Include="..\..\Domain\Juridico\Juridico.csproj" />
+    <ProjectReference Include="..\..\Infra\Cross\AspNetFilters\AspNetMvc.csproj" />
+    <ProjectReference Include="..\..\Infra\Cross\Common\Common.csproj" />
+  </ItemGroup>
+
+</Project>
